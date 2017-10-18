@@ -1,0 +1,41 @@
+﻿{
+  "a1": {
+    "label": {
+      "device": "Device",
+      "mac": "MAC",
+      "host": "IP Address",
+      "loading": "Loading...",
+      "name": "Name",
+      "action": "Action",
+      "light": {
+        "0": "Dark",
+        "1": "Low",
+        "2": "Normal",
+        "3": "High"
+      },
+      "air_quality": {
+        "0": "Perfect",
+        "1": "Good",
+        "2": "Normal",
+        "3": "Bad"
+      },
+      "noise": {
+        "0": "Silent",
+        "1": "Normal",
+        "2": "High",
+        "3": "Extreme"
+      }
+    },
+    "placeholder": {
+      "name": "Name",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+    }
+  }
+}

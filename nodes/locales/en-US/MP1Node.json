@@ -1,0 +1,32 @@
+﻿{
+  "mp1": {
+    "label": {
+      "device": "Device",
+      "mac": "MAC",
+      "host": "IP Address",
+      "loading": "Loading...",
+      "name": "Name",
+      "action": "Action",
+      "option_action_msg": "- Set from msg.payload -",
+      "option_action_getState": "Get state",
+      "option_action_setState": "Set state",
+      "state": "State",
+      "on": "Switch on",
+      "off": "Switch off",
+      "socket": "Socket"
+    },
+    "placeholder": {
+      "name": "Name",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+      "udptip": "It should be remembered that the UDP protocol does not guarantee delivery of the message.",
+      "setState": "Check the sockets whose state you want to change, then select the required state"
+    }
+  }
+}

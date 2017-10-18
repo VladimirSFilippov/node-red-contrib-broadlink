@@ -1,0 +1,115 @@
+﻿<script type="text/x-red" data-template-name="sp2device">
+    <div class="form-row">
+        <label for="node-config-input-mac"><i class="fa fa-cog"></i> <span data-i18n="sp2.label.mac"></span></label>
+        <!--<select id="node-config-input-mac" style="width:70%">
+            <option value="_msg_" data-i18n="sp2.label.loading"></option>
+        </select>-->
+        <input type="text" id="node-config-input-mac" data-i18n="[placeholder]sp2.placeholder.mac">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-cog"></i> <span data-i18n="sp2.label.host"></span></label>
+        <input type="text" id="node-config-input-host" data-i18n="[placeholder]sp2.placeholder.host">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('sp2device', {
+        category: 'config',
+        defaults: {
+            mac: { value: "", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{12})$/) },
+            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) }
+        },
+        /*oneditprepare: function () {
+            var node = this, ddMac = $('#node-config-input-mac');
+            function updateDeviceList() {
+                var url = 'broadlink/scan';
+                ddMac.val("_msg_");
+                $.getJSON(url, function (data) {
+                    ddMac.children().remove();
+                    ddMac.append('<option value="_msg_">- установить из msg.payload -</option>');
+                    for (var item in data.devices) {
+                        if ([0x2711, 0x2719, 0x7919, 0x271a, 0x791a, 0x2720, 0x753e, 0x2728, 0x2733, 0x273e, 0x2736].indexOf(data.devices[item].type) != -1 || (data.devices[item].type >= 0x7530 && data.devices[item].type <= 0x7918)) {
+                            ddMac.append('<option value="' + item + '">' + item.match(/[0-9A-Fa-f]{2}/g).join(':') + '</option>');
+                        }
+                    }
+                    ddMac.val(node.mac);
+                });
+            }
+            updateDeviceList();
+        },*/
+        label: function () {
+            return this.mac.match(/[0-9A-Fa-f]{2}/g).join(':');
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('SP2',{
+        category: 'broadlink',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: "" },
+            device: { type: "sp2device", required: false },
+            action: { value: "getState" },
+            state: { value: "true" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "icon_sp2.png",
+        oneditprepare: function () {
+            $("#node-input-action").change(function () {
+                var id = $("#node-input-action option:selected").val();
+                if (id != 'setState') {
+                    $(".sp2state").hide();
+                }
+                else {
+                    $(".sp2state").show();
+                }
+            });
+        },
+        label: function() {
+            return this.name||"SP2";
+        },
+        inputLabels: "parameter for input",
+        outputLabels: ["output"]
+    });
+</script>
+
+<script type="text/x-red" data-template-name="SP2">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="sp2.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]sp2.placeholder.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-device"><i class="fa fa-cog"></i> <span data-i18n="sp2.label.device"></span></label>
+        <input type="text" id="node-input-device">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-action"><i class="fa fa-code-fork"></i> <span data-i18n="sp2.label.action"></span></label>
+        <select id="node-input-action" style="width:70%">
+            <option value="_msg_" data-i18n="sp2.label.option_action_msg"></option>
+            <option value="getState" data-i18n="sp2.label.option_action_getState"></option>
+            <option value="setState" data-i18n="sp2.label.option_action_setState"></option>
+            <option value="getEnergy" data-i18n="sp2.label.option_action_getEnergy"></option>
+        </select>
+    </div>
+    <div class="form-row sp2state">
+        <label for="node-input-state"><i class="fa fa-power-off"></i> <span data-i18n="sp2.label.state"></span></label>
+        <select id="node-input-state" style="width:70%">
+            <option value="true" data-i18n="sp2.label.on"></option>
+            <option value="false" data-i18n="sp2.label.off"></option>
+        </select>
+    </div>
+    <!--<div class="form-tips" data-i18n="sp2.message.udptip"></div>-->
+</script>
+
+<script type="text/x-red" data-help-name="SP2" data-lang="ru-RU">
+    <p><span >Узел, позволяющий управлять вашим Broadlink SP2.</span></p>
+    <p><span >Выбирете действие, либо установите через</span> <code>msg.payload.action</code></p>
+    <h3><span >Состояние</span></h3>
+    <pre>msg.payload.action = 'getState';</pre>
+    <h3><span >Установить</span></h3>
+<pre>msg.payload.action = 'setState';
+msg.payload.state = false;</pre>
+</script>

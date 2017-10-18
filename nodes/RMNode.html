@@ -1,0 +1,166 @@
+﻿<script type="text/javascript">
+    RED.nodes.registerType('rmdevice', {
+        category: 'config',
+        defaults: {
+            folder: { value: "", required: true, validate: RED.validators.regex(/^((?:[A-Z]:)?(?:\/.+$))/) },
+            mac: { value: "", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{12})$/) },
+            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) }
+        },
+        label: function () {
+            return this.mac.match(/[0-9A-Fa-f]{2}/g).join(':');
+        }
+    });
+</script>
+<script type="text/x-red" data-template-name="rmdevice">
+    <div class="form-row">
+        <label for="node-config-input-mac"><i class="fa fa-cog"></i> <span data-i18n="rm.label.mac"></span></label>
+        <input type="text" id="node-config-input-mac" data-i18n="[placeholder]rm.placeholder.mac">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-cog"></i> <span data-i18n="rm.label.host"></span></label>
+        <input type="text" id="node-config-input-host" data-i18n="[placeholder]rm.placeholder.host">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-folder"><i class="fa fa-database"></i> <span data-i18n="rm.label.folder"></span></label>
+        <input type="text" id="node-config-input-folder" data-i18n="[placeholder]rm.placeholder.folder">
+    </div>
+</script>
+<script type="text/x-red" data-help-name="rmdevice" data-lang="ru-RU">
+    <p><span>Скопируйте каталог <code>/sdcard/broadlink/eControl/</code> с вашего Android устройства, и укажите путь к нему в поле <code>Каталог</code>. В директории <code>SharedData</code> должны находиться файлы <code>jsonSubIr</code>,<code>jsonButton</code> и <code>jsonIrCode</code> Если их нет, то возможно стоит в eControl тапнуть <pre>"Поделиться" > "Поделиться, с другими, смартфонами в, WI-FI сети"</pre> После этого файлы должны появиться.</span></p>
+</script>
+<script type="text/x-red" data-help-name="rmdevice" data-lang="en-US">
+    <p><span>Copy the directory <code>/sdcard/broadlink/eControl/</code> from your Android device, and specify the path to it in the <code>Каталог</code> field. In the <code>SharedData</code> directory there should be files <code>jsonSubIr</code>,<code>jsonButton</code> and <code>jsonIrCode</code> If they do not exist, then it is possible to tap "Share" in the eControl, "Share with other smartphones in the WI-FI network." After that, the files should appear.</span></p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('RM', {
+        category: 'broadlink',
+        color: '#A6BBCF',
+        defaults: {
+            name: { value: "" },
+            device: { type: "rmdevice", required: false },
+            action: { value: "temperature" },
+            remote: { value: "" },
+            button: { value: "" },
+            //repeat: { value: 0 },
+            fix: { value: 1 },
+            RFSweep: { value: "false" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icon_rm.png",
+        oneditprepare: function () {
+
+
+            $("#node-input-action").change(function () {
+                var id = $("#node-input-action option:selected").val();
+                $(".rmaction").hide();
+                $("#rmaction-" + id).show();
+            });
+
+            var node = this, ddConfig = $('#node-input-device'), ddDevice = $('#node-input-remote'), ddButton = $('#node-input-button');
+            function updateRemoteList() {
+                var config = RED.nodes.node(ddConfig.val()),
+                    url = 'broadlink/' + ddConfig.val() + '/remote';
+                $.getJSON(url, function (data) {
+                    ddDevice.children().remove();
+                    for (var i = 0; i < data.length; i++) {
+                        var dev = data[i];
+                        ddDevice.append('<option value="' + dev.id + '">' + dev.name + '</option>');
+                    }
+                    ddDevice.val(node.remote);
+                });
+            }
+            ddConfig.change(function () {
+                updateRemoteList();
+            });
+
+
+
+
+            function updateButtonList() {
+                var config = RED.nodes.node(ddConfig.val()),
+                    url = 'broadlink/' + ddConfig.val() + '/button';
+                $.getJSON(url, function (data) {
+                    ddButton.children().remove();
+                    data = data.filter(function (obj) { if (obj.subIRId == ddDevice.val()) { return true; } });
+                    for (var i = 0; i < data.length; i++) {
+                        var dev = data[i];
+                        ddButton.append('<option value="' + dev.id + '">' + dev.name + '</option>');
+                    }
+                    ddButton.val(node.button);
+                });
+            }
+            ddDevice.change(function () {
+                updateButtonList();
+            });
+        },
+        label: function () {
+            return this.name || "RM";
+        },
+        inputLabels: "parameter for input",
+        outputLabels: ["output"]
+    });
+</script>
+<script type="text/x-red" data-template-name="RM">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="rm.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]rm.placeholder.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-device"><i class="fa fa-cog"></i> <span data-i18n="rm.label.device"></span></label>
+        <input type="text" id="node-input-device">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-action"><i class="fa fa-code-fork"></i> <span data-i18n="rm.label.action"></span></label>
+        <select id="node-input-action" style="width:70%">
+            <option value="_msg_" data-i18n="rm.label.option_action_msg"></option>
+            <option value="learn" data-i18n="rm.label.option_action_learn"></option>
+            <option value="send" data-i18n="rm.label.option_action_send"></option>
+            <option value="temperature" data-i18n="rm.label.option_action_temperature"></option>
+        </select>
+    </div>
+    <div class="form-row rmaction" id="rmaction-send">
+        <div class="form-row rmdata">
+            <label for="node-input-remote"><i class="fa fa-keyboard-o"></i> <span data-i18n="rm.label.remote"></span></label>
+            <select id="node-input-remote"></select>
+        </div>
+        <div class="form-row rmdata">
+            <label for="node-input-button"><i class="fa fa-wifi"></i> <span data-i18n="rm.label.button"></span></label>
+            <select id="node-input-button"></select>
+        </div>
+        <!--<div class="form-row rmdata">
+            <label for="node-input-repeat"><i class="fa fa-repeat"></i> <span data-i18n="rm.label.repeat"></span></label>
+            <input type="number" id="node-input-repeat" style="width:220px">
+        </div>-->
+        <div class="form-row rmdata">
+            <label for="node-input-fix"><i class="fa fa-repeat"></i> <span >Code fix</span></label>
+            <input type="number" id="node-input-fix" min="1" style="width:220px">
+        </div>
+    </div>
+    <div class="form-row rmaction" id="rmaction-learn">
+        <label for="node-input-RFSweep"><i class="fa fa-search"></i> <span data-i18n="rm.label.RFSweep"></span></label>
+        <select id="node-input-RFSweep" style="width:70%">
+            <option value="true" data-i18n="rm.label.yes"></option>
+            <option value="false" data-i18n="rm.label.no"></option>
+        </select>
+    </div>
+</script>
+<script type="text/x-red" data-help-name="RM" data-lang="ru-RU">
+    <p><span >Узел, позволяющий управлять вашим Broadlink RM.</span></p>
+    <p><span >Выбирете действие, либо установите через</span> <code>msg.payload.action</code></p>
+    <h3><span >Температура</span></h3>
+    <pre>msg.payload.action = 'temperature';</pre>
+    <h3><span >Обучение</span></h3>
+    <pre>msg.payload.action = 'learn';</pre>
+    <h3><span >Управление</span></h3>
+    <p><span >Можно отправить код</span>:</p>
+<pre>msg.payload.action = 'send';
+msg.payload.data = [ 38, 0, 34, 1, 40, 15, 40, 15....];    
+</pre>
+    <p><span >Либо Id кнопки из файла jsonIrCode</span>:</p>
+<pre>msg.payload.action = 'send';
+msg.payload.button = 202;
+</pre>
+</script>

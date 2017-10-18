@@ -1,0 +1,34 @@
+﻿{
+  "s1c": {
+    "label": {
+      "device": "Устройство",
+      "mac": "MAC адрес",
+      "host": "IP адрес",
+      "loading": "Loading...",
+      "name": "Имя",
+      "action": "Действие",
+      "option_action_msg": "- установить из msg.payload -",
+      "get_sensors_status": "Статус датчиков",
+      "get_alarm_status": "Статус защиты",
+      "set_alarm_status": "Установить защиту",
+      "get_trigger_status": "Статус тревоги",
+      "arm": "Защита",
+      "notification": "Оповещ.",
+      "alarm": "Тревога",
+      "yes": "Да",
+      "no": "Нет"
+    },
+    "placeholder": {
+      "name": "Имя",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+      "udptip": "Следует помнить, что протокол UDP не гарантирует доставку сообщения."
+    }
+  }
+}

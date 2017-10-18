@@ -1,0 +1,23 @@
+﻿<script type="text/javascript">
+    RED.nodes.registerType('Discover', {
+        category: 'broadlink',
+        color: '#C0C0C0',
+        defaults: {
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icon_broadlink.png",
+        label: function () {
+            return this.name || "Discover";
+        },
+        inputLabels: "parameter for input",
+        outputLabels: ["output"]
+    });
+</script>
+<script type="text/x-red" data-template-name="Discover">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="discover.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]discover.placeholder.name">
+    </div>
+</script>

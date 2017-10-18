@@ -1,0 +1,37 @@
+﻿{
+  "rm": {
+    "label": {
+      "device": "Устройство",
+      "mac": "MAC адрес",
+      "host": "IP адрес",
+      "loading": "Поиск...",
+      "folder": "Каталог",
+      "name": "Имя",
+      "action": "Действие",
+      "option_action_msg": "- установить из msg.payload -",
+      "option_action_learn": "Обучение",
+      "option_action_send": "Управление",
+      "option_action_temperature": "Температура",
+      "remote": "Пульт",
+      "button": "Кнопка",
+      "inputLabels": "parameter for input",
+      "outputLabels": "output",
+      "yes": "Да",
+      "no": "Нет",
+      "RFSweep": "RF Sweep"
+
+    },
+    "placeholder": {
+      "folder": "D:/SharedData",
+      "name": "Имя",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+    }
+  }
+}

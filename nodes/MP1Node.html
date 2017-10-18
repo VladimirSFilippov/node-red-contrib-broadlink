@@ -1,0 +1,151 @@
+﻿<script type="text/x-red" data-template-name="mp1device">
+    <div class="form-row">
+        <label for="node-config-input-mac"><i class="fa fa-cog"></i> <span data-i18n="mp1.label.mac"></span></label>
+        <!--<select id="node-config-input-mac" style="width:70%">
+            <option value="_msg_" data-i18n="mp1.label.loading"></option>
+        </select>-->
+        <input type="text" id="node-config-input-mac" data-i18n="[placeholder]mp1.placeholder.mac">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-cog"></i> <span data-i18n="mp1.label.host"></span></label>
+        <input type="text" id="node-config-input-host" data-i18n="[placeholder]mp1.placeholder.host">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('mp1device', {
+        category: 'config',
+        defaults: {
+            mac: { value: "", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{12})$/) },
+            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) }
+        },
+        /*oneditprepare: function () {
+            var node = this, ddMac = $('#node-config-input-mac');
+            function updateDeviceList() {
+                var url = 'broadlink/scan';
+                ddMac.val("_msg_");
+                $.getJSON(url, function (data) {
+                    ddMac.children().remove();
+                    ddMac.append('<option value="_msg_">- установить из msg.payload -</option>');
+                    for (var item in data.devices) {
+                        if ([0x4EB5].indexOf(data.devices[item].type) != -1) {
+                            ddMac.append('<option value="' + item + '">' + item.match(/[0-9A-Fa-f]{2}/g).join(':') + '</option>');
+                        }
+                    }
+                    ddMac.val(node.mac);
+                });
+            }
+            updateDeviceList();
+        },*/
+        label: function () {
+            return this.mac.match(/[0-9A-Fa-f]{2}/g).join(':');
+        }
+    });
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('MP1',{
+        category: 'broadlink',
+        color: '#3FADB5',
+        defaults: {
+            name: { value: "" },
+            device: { type: "mp1device", required: false },
+            action: { value: "getState" },
+            s1: { value: true },
+            s2: { value: false },
+            s3: { value: false },
+            s4: { value: false },
+            state: { value: "true" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "icon_sp2.png",
+        oneditprepare: function () {
+            $("#node-input-action").change(function () {
+                var id = $("#node-input-action option:selected").val();
+                if (id != 'setState') {
+                    $(".mp1socket").hide();
+                    $(".setState").hide();
+                }
+                else {
+                    $(".mp1socket").show();
+                    $(".setState").show();
+                }
+            });
+        },
+        label: function() {
+            return this.name||"MP1";
+        },
+        inputLabels: "parameter for input",
+        outputLabels: ["output"]
+    });
+</script>
+
+<script type="text/x-red" data-template-name="MP1">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="mp1.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]mp1.placeholder.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-device"><i class="fa fa-cog"></i> <span data-i18n="mp1.label.device"></span></label>
+        <input type="text" id="node-input-device">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-action"><i class="fa fa-code-fork"></i> <span data-i18n="mp1.label.action"></span></label>
+        <select id="node-input-action" style="width:70%">
+            <option value="_msg_" data-i18n="mp1.label.option_action_msg"></option>
+            <option value="getState" data-i18n="mp1.label.option_action_getState"></option>
+            <option value="setState" data-i18n="mp1.label.option_action_setState"></option>
+        </select>
+    </div>
+    <div class="form-row mp1socket">
+        <table>
+            <tr>
+                <td><label><i class="fa fa-plug"></i> <span data-i18n="mp1.label.socket"></span></label></td>
+                <td>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S1</th>
+                                <th>S2</th>
+                                <th>S3</th>
+                                <th>S4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input id="node-input-s1" type='checkbox' /></td>
+                                <td><input id="node-input-s2" type='checkbox' /></td>
+                                <td><input id="node-input-s3" type='checkbox' /></td>
+                                <td><input id="node-input-s4" type='checkbox' /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-row mp1socket">
+        <label for="node-input-state"><i class="fa fa-power-off"></i> <span data-i18n="mp1.label.state"></span></label>
+        <select id="node-input-state" style="width:70%">
+            <option value="true" data-i18n="mp1.label.on"></option>
+            <option value="false" data-i18n="mp1.label.off"></option>
+        </select>
+    </div>
+    <div class="form-tips setState"><span data-i18n="mp1.message.setState"></span></div>
+    <br class="setState" />
+</script>
+
+<script type="text/x-red" data-help-name="MP1" data-lang="ru-RU">
+    <p><span >Узел, позволяющий управлять вашим Broadlink MP1.</span></p>
+    <p><span >Выбирете действие, либо установите через</span> <code>msg.payload.action</code></p>
+    <h3><span >Состояние</span></h3>
+    <pre>msg.payload.action = 'getState';</pre>
+    <h3><span >Установить</span></h3>
+<pre>msg.payload.action = 'setState';    
+msg.payload.state = false;    
+msg.payload.s1 = true;    
+msg.payload.s2 = true;    
+msg.payload.s3 = false;    
+msg.payload.s4 = false;</pre>
+</script>

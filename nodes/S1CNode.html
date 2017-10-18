@@ -1,0 +1,130 @@
+﻿
+<script type="text/x-red" data-template-name="s1cdevice">
+    <div class="form-row">
+        <label for="node-config-input-mac"><i class="fa fa-cog"></i> <span data-i18n="s1c.label.mac"></span></label>
+        <!--<select id="node-config-input-mac" style="width:70%">
+            <option value="_msg_" data-i18n="s1c.label.loading"></option>
+        </select>-->
+        <input type="text" id="node-config-input-mac" data-i18n="[placeholder]s1c.placeholder.mac">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-cog"></i> <span data-i18n="s1c.label.host"></span></label>
+        <input type="text" id="node-config-input-host" data-i18n="[placeholder]s1c.placeholder.host">
+    </div>
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('s1cdevice', {
+        category: 'config',
+        defaults: {
+            mac: { value: "", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{12})$/) },
+            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) }
+        },
+        /*oneditprepare: function () {
+            var node = this, ddMac = $('#node-config-input-mac');
+            function updateDeviceList() {
+                var url = 'broadlink/scan';
+                ddMac.val("_msg_");
+                $.getJSON(url, function (data) {
+                    ddMac.children().remove();
+                    ddMac.append('<option value="_msg_">- установить из msg.payload -</option>');
+                    for (var item in data.devices) {
+                        if ([0x2722].indexOf(data.devices[item].type) != -1) {
+                            ddMac.append('<option value="' + item + '">' + item.match(/[0-9A-Fa-f]{2}/g).join(':') + '</option>');
+                        }
+                    }
+                    ddMac.val(node.mac);
+                });
+            }
+            updateDeviceList();
+        },*/
+        label: function () {
+            return this.mac.match(/[0-9A-Fa-f]{2}/g).join(':');
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('S1C',{
+        category: 'broadlink',
+        color: '#D8BFD8',
+        defaults: {
+            name: { value: "" },
+            device: { type: "s1cdevice", required: false },
+            action: { value: "get_sensors_status" },
+            state: { value: "disarm" },
+            notification: { value: "true" },
+            alarm: { value: "true" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "icon_s1c.png",
+        oneditprepare: function () {
+            $("#node-input-action").change(function () {
+                var id = $("#node-input-action option:selected").val();
+                if (id != 'set_alarm_status') {
+                    $(".alarm").hide();
+                }
+                else {
+                    $(".alarm").show();
+                }
+            });
+        },
+        label: function() {
+            return this.name ||"S1C";
+        },
+        inputLabels: "parameter for input",
+        outputLabels: ["output"]
+    });
+</script>
+
+<script type="text/x-red" data-template-name="S1C">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="s1c.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]s1c.placeholder.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-device"><i class="fa fa-cog"></i> <span data-i18n="s1c.label.device"></span></label>
+        <input type="text" id="node-input-device">
+    </div>
+    <!--<div class="form-tips" data-i18n="s1c.message.udptip"></div>-->
+
+    <div class="form-row">
+        <label for="node-input-action"><i class="fa fa-code-fork"></i> <span data-i18n="s1c.label.action"></span></label>
+        <select id="node-input-action" style="width:70%">
+            <option value="_msg_" data-i18n="s1c.label.option_action_msg"></option>
+            <option value="get_sensors_status" data-i18n="s1c.label.get_sensors_status">get_sensors_status</option>
+            <option value="get_alarm_status" data-i18n="s1c.label.get_alarm_status">get_alarm_status</option>
+            <option value="set_alarm_status" data-i18n="s1c.label.set_alarm_status">set_alarm_status</option>
+            <option value="get_trigger_status" data-i18n="s1c.label.get_trigger_status">get_trigger_status</option>
+        </select>
+    </div>
+    <div class="form-row alarm">
+        <label for="node-input-state"><i class="fa fa-shield"></i> <span data-i18n="s1c.label.arm"></span></label>
+        <select id="node-input-state" style="width:70%">
+            <!--<option value="_msg_">_msg_</option>-->
+            <option value="full_arm">Full arm</option>
+            <option value="part_arm">Part arm</option>
+            <option value="disarm">Disarm</option>
+        </select>
+    </div>
+    <div class="form-row alarm">
+        <label for="node-input-notification"><i class="fa fa-bell"></i> <span data-i18n="s1c.label.notification"></span></label>
+        <select id="node-input-notification" style="width:70%">
+            <option value="true" data-i18n="s1c.label.yes"></option>
+            <option value="false" data-i18n="s1c.label.no"></option>
+        </select>
+    </div>
+    <div class="form-row alarm">
+        <label for="node-input-alarm"><i class="fa fa-exclamation-triangle"></i> <span data-i18n="s1c.label.alarm"></span></label>
+        <select id="node-input-alarm" style="width:70%">
+            <option value="true" data-i18n="s1c.label.yes"></option>
+            <option value="false" data-i18n="s1c.label.no"></option>
+        </select>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="S1C" data-lang="ru-RU">
+    <p>Узел, позволяющий получать данные с вашего Broadlink S1C.</p>
+</script>

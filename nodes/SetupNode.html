@@ -1,0 +1,63 @@
+﻿<script type="text/javascript">
+    RED.nodes.registerType('Setup', {
+        category: 'broadlink',
+        color: '#87A980',
+        defaults: {
+            name: { value: "" },
+            ssid: { value: "" },
+            security_mode: { value: 0 }//0-password hide
+        },
+        credentials: {
+            password: { type: "password" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icon_wifi.png",
+        label: function () {
+            return this.name || "Setup";
+        },
+        oneditprepare: function () {
+            $("#node-input-security_mode").change(function () {
+                var id = $("#node-input-security_mode option:selected").val();
+                $(".security_mode").show();
+                $("#security_mode-" + id).hide();
+            });
+        },
+        inputLabels: "parameter for input",
+        outputLabels: ["output"]
+    });
+</script>
+<script type="text/x-red" data-template-name="Setup">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="setup.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]setup.placeholder.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ssid"><i class="fa fa-wifi"></i> SSID</label>
+        <input type="text" id="node-input-ssid">
+    </div>
+    <div class="form-row">
+        <label for="node-input-security_mode"><i class="fa fa-shield"></i> <span>Mode</span></label>
+        <select id="node-input-security_mode" style="width:300px">
+            <option value="0">none</option>
+            <option value="1">WEP</option>
+            <option value="2">WPA1</option>
+            <option value="3">WPA2</option>
+            <option value="4">WPA1/2</option>
+        </select>
+    </div>
+    <div class="form-row security_mode" id="security_mode-0">
+        <label for="node-input-password"><i class="icon-tag"></i> Password</label>
+        <input type="password" id="node-input-password">
+    </div>
+</script>
+<script type="text/x-red" data-help-name="Setup" >
+    <h3><span>Setup a new device on your local wireless network:</span></h3>
+    <ul>
+        <li>Put the device into AP Mode</li>
+        <li>Long press the reset button until the blue LED is blinking quickly.</li>
+        <li>Long press again until blue LED is blinking slowly.</li>
+        <li>Manually connect to the WiFi SSID named BroadlinkProv.</li>
+        <li>Run setup() and provide your ssid, network password (if secured), and set the security mode</li>
+    </ul>
+</script>

@@ -1,0 +1,30 @@
+﻿{
+  "sp2": {
+    "label": {
+      "device": "Устройство",
+      "mac": "MAC адрес",
+      "host": "IP адрес",
+      "loading": "Loading...",
+      "name": "Имя",
+      "action": "Действие",
+      "option_action_msg": "- установить из msg.payload -",
+      "option_action_getState": "Состояние",
+      "option_action_setState": "Установить",
+      "option_action_getEnergy": "Потребление",
+      "state": "Состояние",
+      "on": "Включить",
+      "off": "Выключить"
+    },
+    "placeholder": {
+      "name": "Имя",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+    }
+  }
+}

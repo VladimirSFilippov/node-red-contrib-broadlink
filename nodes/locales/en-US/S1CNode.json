@@ -1,0 +1,34 @@
+﻿{
+  "s1c": {
+    "label": {
+      "device": "Device",
+      "mac": "MAC",
+      "host": "IP Address",
+      "loading": "Loading...",
+      "name": "Name",
+      "action": "Action",
+      "option_action_msg": "- Set from msg.payload -",
+      "get_sensors_status": "Get sensors status",
+      "get_alarm_status": "Get alarm status",
+      "set_alarm_status": "Set alarm status",
+      "get_trigger_status": "Get trigger status",
+      "arm": "Arm",
+      "notification": "Notif.",
+      "alarm": "Alarm",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "placeholder": {
+      "name": "Name",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+      "udptip": "It should be remembered that the UDP protocol does not guarantee delivery of the message."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "node-red-contrib-broadlink",
+  "version": "0.2.5",
+  "description": "Управление устройствами Broadlink",
+  "engines": { "node": ">=6.9.5" },
+  "dependencies": {
+    "events": ">=1.1.1",
+    "dgram": ">=1.0.1",
+    "os": ">=0.1.1",
+    "crypto": ">=0.0.3"
+  },
+  "keywords": [
+    "node-red",
+    "Broadlink",
+    "broadlink",
+    "iot"
+  ],
+  "node-red": {
+    "nodes": {
+      "rm": "nodes/RMNode.js",
+      "eAir": "nodes/A1Node.js",
+      "smartplug": "nodes/SP2Node.js",
+      "mp": "nodes/MP1Node.js",
+      "s1c": "nodes/S1CNode.js",
+      "discover": "nodes/DiscoverNode.js",
+      "setup": "nodes/SetupNode.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VladimirSFilippov/node-red-contrib-broadlink"
+  },
+  "author": {
+    "name": "Vladimir Filippov",
+    "email": "VladimirSFilippov@gmail.com",
+    "url": "https://github.com/VladimirSFilippov"
+  },
+  "readme": "README.md"
+}

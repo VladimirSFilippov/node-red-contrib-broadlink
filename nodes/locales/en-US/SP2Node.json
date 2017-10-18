@@ -1,0 +1,30 @@
+﻿{
+  "sp2": {
+    "label": {
+      "device": "Device",
+      "mac": "MAC",
+      "host": "IP Address",
+      "loading": "Loading...",
+      "name": "Name",
+      "action": "Action",
+      "option_action_msg": "- Set from msg.payload -",
+      "option_action_getState": "Get state",
+      "option_action_setState": "Set state",
+      "option_action_getEnergy": "Get energy",
+      "state": "State",
+      "on": "Switch on",
+      "off": "Switch off"
+    },
+    "placeholder": {
+      "name": "Name",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+    }
+  }
+}

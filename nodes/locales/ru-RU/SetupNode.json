@@ -1,0 +1,16 @@
+﻿{
+  "setup": {
+    "label": {
+      "name": "Имя"
+    },
+    "placeholder": {
+      "name": "Имя"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+    }
+  }
+}
