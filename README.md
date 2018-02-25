@@ -1,4 +1,4 @@
-# node-red-contrib-broadlink
+# node-red-contrib-broadlink-control
 A set of node-red nodes to manage the Broadlink http://www.ibroadlink.com/ RM series of IR Controllers and  for home automation. A cost effective way to control Air Conditioners, TV's, Audio equipment and many more like a universal remote control unit.
 
 This is a fork of the work by VladimirSFilippov https://github.com/VladimirSFilippov/node-red-contrib-broadlink with some enhancements for some additions I was looking for.
