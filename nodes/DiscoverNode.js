@@ -4,6 +4,7 @@
         RED.nodes.createNode(this, config);
         var node = this;
         this.on('input', function (msg) {
+            node.status({fill:"blue",shape:"ring",text:"Discovering Devices"});
             var b = new Broadlink();
             b.discover();
             setTimeout(function () {
@@ -33,6 +34,7 @@
                     else if (devtype == 0x2722) return 'S1(SmartOne Alarm Kit)';
                 }
 
+                node.status({fill:"red",shape:"ring",text:"Found x Devices"});
                 for (var device in b.devices) {
                     dev.push(
                         {
