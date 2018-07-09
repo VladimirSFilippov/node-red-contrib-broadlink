@@ -1,5 +1,8 @@
 # node-red-contrib-broadlink
-[![GitHub version](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink.svg)](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink)
+[![GitHub version](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink.svg)](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink) 
+[![GitHub issues](https://img.shields.io/github/issues/mlfunston/node-red-contrib-broadlink.svg)](https://github.com/mlfunston/node-red-contrib-broadlink/issues) 
+[![GitHub license](https://img.shields.io/github/license/mlfunston/node-red-contrib-broadlink.svg)](https://github.com/mlfunston/node-red-contrib-broadlink/blob/master/LICENSE) 
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/mlfunston/node-red-contrib-broadlink.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fmlfunston%2Fnode-red-contrib-broadlink)
 
 A set of node-red nodes to manage the Broadlink http://www.ibroadlink.com/ RM series of IR Controllers and  for home automation. A cost effective way to control Air Conditioners, TV's, Audio equipment and many more like a universal remote control unit.
 
