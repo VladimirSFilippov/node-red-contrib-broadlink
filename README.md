@@ -1,4 +1,6 @@
 # node-red-contrib-broadlink
+[![GitHub version](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink.svg)](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink)
+
 A set of node-red nodes to manage the Broadlink http://www.ibroadlink.com/ RM series of IR Controllers and  for home automation. A cost effective way to control Air Conditioners, TV's, Audio equipment and many more like a universal remote control unit.
 
 ## Supported Devices: RM-Mini 3, RM-Pro, etc
