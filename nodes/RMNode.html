@@ -29,7 +29,7 @@
     <p><span>Скопируйте каталог <code>/sdcard/broadlink/eControl/</code> с вашего Android устройства, и укажите путь к нему в поле <code>Каталог</code>. В директории <code>SharedData</code> должны находиться файлы <code>jsonSubIr</code>,<code>jsonButton</code> и <code>jsonIrCode</code> Если их нет, то возможно стоит в eControl тапнуть <pre>"Поделиться" > "Поделиться, с другими, смартфонами в, WI-FI сети"</pre> После этого файлы должны появиться.</span></p>
 </script>
 <script type="text/x-red" data-help-name="rmdevice" data-lang="en-US">
-    <p><span>Copy the directory <code>/sdcard/broadlink/eControl/</code> from your Android device, and specify the path to it in the <code>Каталог</code> field. In the <code>SharedData</code> directory there should be files <code>jsonSubIr</code>,<code>jsonButton</code> and <code>jsonIrCode</code> If they do not exist, then it is possible to tap "Share" in the eControl, "Share with other smartphones in the WI-FI network." After that, the files should appear.</span></p>
+    <p><span>Copy the directory <code>/sdcard/broadlink/eControl/</code> from your Android device, and specify the path to it in the <code>Catalog</code> field. In the <code>SharedData</code> directory there should be files named <code>jsonSubIr</code>,<code>jsonButton</code> and <code>jsonIrCode</code> If they do not exist, then it is possible to tap "Share" in the eControl app and "Share with other smartphones in the WI-FI network." After that, the files should appear.</span></p>
 </script>
 
 <script type="text/javascript">
@@ -160,6 +160,23 @@
 msg.payload.data = [ 38, 0, 34, 1, 40, 15, 40, 15....];    
 </pre>
     <p><span >Либо Id кнопки из файла jsonIrCode</span>:</p>
+<pre>msg.payload.action = 'send';
+msg.payload.button = 202;
+</pre>
+</script>
+<script type="text/x-red" data-help-name="RM" data-lang="en-US">
+    <p><span >A node that allows you to manage your Broadlink RM.</span></p>
+    <p><span >Choose an action, or set it through</span> <code>msg.payload.action</code></p>
+    <h3><span >Temperature</span></h3>
+    <pre>msg.payload.action = 'temperature';</pre>
+    <h3><span >Learning</span></h3>
+    <pre>msg.payload.action = 'learn';</pre>
+    <h3><span >Sending Commands</span></h3>
+    <p><span >You can send codes directly</span>:</p>
+<pre>msg.payload.action = 'send';
+msg.payload.data = [ 38, 0, 34, 1, 40, 15, 40, 15....];    
+</pre>
+    <p><span >Or the button Id from the jsonIrCode file</span>:</p>
 <pre>msg.payload.action = 'send';
 msg.payload.button = 202;
 </pre>

@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-broadlink",
-  "version": "0.2.5",
-  "description": "Управление устройствами Broadlink",
+  "version": "0.2.6",
+  "description": "Broadlink nodes to control the Broadlink RM devices and other Broadlink home automation nodes.",
   "engines": { "node": ">=6.9.5" },
   "dependencies": {
     "events": ">=1.1.1",
