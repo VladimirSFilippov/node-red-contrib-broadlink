@@ -1,18 +1,18 @@
 {
   "name": "node-red-contrib-broadlink-control",
-  "version": "0.2.7",
-  "description": "Broadlink nodes to control the Broadlink RM devices and other Broadlink home automation nodes.",
+  "version": "1.0.0",
+  "description": "Node Red nodes to control the Broadlink RM devices and other Broadlink home automation nodes.",
   "engines": { "node": ">=6.9.5" },
   "dependencies": {
     "events": ">=1.1.1",
     "dgram": ">=1.0.1",
-    "os": ">=0.1.1",
-    "crypto": ">=0.0.3"
+    "os": ">=0.1.1"
   },
   "keywords": [
     "node-red",
     "Broadlink",
     "broadlink",
+    "home automation",
     "iot"
   ],
   "node-red": {
@@ -32,8 +32,29 @@
   },
   "author": {
     "name": "Mark Funston",
-    "email": "mlfunstonv@gmail.com",
+    "email": "mlfunston@gmail.com",
     "url": "https://github.com/mlfunston"
   },
-  "readme": "README.md"
+  "contributors": [
+    {
+      "name": "Mark Funston",
+      "email": "mlfunston@gmail.com",
+      "url": "https://github.com/mlfunston"
+    },
+    {
+      "name": "Vladimir Filippov",
+      "email": "VladimirSFilippov@gmail.com",
+      "url": "https://github.com/VladimirSFilippov"
+    },
+    {
+      "name": "Bouni",
+      "url": "https://github.com/Bouni"
+    }
+  ],
+  "bugs": {
+    "email": "mlfunston@gmail.com",
+    "url": "https://github.com/mlfunston/node-red-contrib-broadlink/issues"
+  },
+  "license" : "MIT",
+  "homepage" : "https://github.com/mlfunston/node-red-contrib-broadlink"
 }

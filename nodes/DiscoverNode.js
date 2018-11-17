@@ -32,19 +32,26 @@
                     else if (devtype == 0x2714) return 'A1';
                     else if (devtype == 0x4EB5) return 'MP1';
                     else if (devtype == 0x2722) return 'S1(SmartOne Alarm Kit)';
+                    else return 'Unconfigured Device Type: Log an issue with the device details and typeid returned as this may be a new device type.';
                 }
-
-                node.status({fill:"red",shape:"ring",text:"Found x Devices"});
+                
                 for (var device in b.devices) {
                     dev.push(
                         {
                             mac: device,
                             ip: b.devices[device].address,
+                            typeid: b.devices[device].type.toString(16),
                             type: getType(b.devices[device].type)
                         });
                 }
-                msg.payload = dev;
-                node.send(msg);
+                if (dev.length == 0) {
+                    node.status({fill:"red",shape:"ring",text:"No Devices Found"});
+                }
+                else {
+                    node.status({fill:"green",shape:"ring",text:"Found Some Devices"});
+                    msg.payload = dev;
+                    node.send(msg);
+                }
             }, 3000);//timeout
         });
 

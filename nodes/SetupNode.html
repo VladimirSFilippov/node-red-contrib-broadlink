@@ -51,13 +51,15 @@
         <input type="password" id="node-input-password">
     </div>
 </script>
-<script type="text/x-red" data-help-name="Setup" >
+<script type="text/x-red" data-help-name="Setup" data-lang = "en-US">
+    <p>A node that allows you to configure Broadlink devices via directly connecting to them on WiFi.</p>
     <h3><span>Setup a new device on your local wireless network:</span></h3>
     <ul>
         <li>Put the device into AP Mode</li>
         <li>Long press the reset button until the blue LED is blinking quickly.</li>
         <li>Long press again until blue LED is blinking slowly.</li>
         <li>Manually connect to the WiFi SSID named BroadlinkProv.</li>
-        <li>Run setup() and provide your ssid, network password (if secured), and set the security mode</li>
+        <li>Trigger this setup node and provide your ssid, the WiFi security mode and network password (if secured) that you want the Broadlink device to connect to.</li>
     </ul>
+    <p>Note: This could be complicated depending on your local setup and what node-red is deployed on.
 </script>
