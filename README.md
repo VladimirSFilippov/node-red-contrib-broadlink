@@ -86,7 +86,7 @@ This Node-RED module is based on the great work of **VladimirSFilippov** - [Vlad
 
 ## Changelog
 
-### v1.0.0 (latest)
+### v1.0.1 (latest)
 
 * Production v1 Release Fork of VladimirSFilippov's Broadlink node as he seems to have stopped development on it.
 * Updated docs & node info
