@@ -10,7 +10,7 @@
   },
   "keywords": [
     "node-red",
-    "Broadlink",
+    "broadlink-rm",
     "broadlink",
     "home automation",
     "iot"
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mlfunston/node-red-contrib-broadlink"
+    "url": "https://github.com/mlfunston/node-red-contrib-broadlink-control"
   },
   "author": {
     "name": "Mark Funston",
@@ -53,8 +53,8 @@
   ],
   "bugs": {
     "email": "mlfunston@gmail.com",
-    "url": "https://github.com/mlfunston/node-red-contrib-broadlink/issues"
+    "url": "https://github.com/mlfunston/node-red-contrib-broadlink-control/issues"
   },
   "license" : "MIT",
-  "homepage" : "https://github.com/mlfunston/node-red-contrib-broadlink"
+  "homepage" : "https://github.com/mlfunston/node-red-contrib-broadlink-control"
 }
