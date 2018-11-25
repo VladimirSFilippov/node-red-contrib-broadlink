@@ -1,4 +1,4 @@
-# node-red-contrib-broadlink-control
+# Broadlink Control - Broadlink Device nodes for Node-RED
 
 [![GitHub version](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink-control.svg)](https://badge.fury.io/gh/mlfunston%2Fnode-red-contrib-broadlink-control)
 [![GitHub issues](https://img.shields.io/github/issues/mlfunston/node-red-contrib-broadlink-control.svg)](https://github.com/mlfunston/node-red-contrib-broadlink-control/issues)
@@ -14,7 +14,15 @@ This is a fork of the work by VladimirSFilippov <https://github.com/VladimirSFil
 * RM-Mini 3 - <http://www.ibroadlink.com/rmMini3/>
 * RM-Pro - <http://www.ibroadlink.com/rmPro+/>
 
-Note: There are other nodes included, however, I have not tested them as I don't have those devices. So let me know if you've had success using them.
+Note: There are other nodes included per below list, however, I have not tested them as I don't have those devices. So let me know if you've had success using them.
+
+* A1 - Environment Sensor - <http://www.ibroadlink.com/a1/>
+* MP1 - 4 Outlet Power Strip
+* S1C - SmartONE Alarm Kit - <http://www.ibroadlink.com/s1c/>
+* SP2 - WiFi Smart Socket
+
+The TC2 device is not directly supported as it communicates via RF to the RM-Pro. However, if you have an RM Pro unit, you can pull the RF codes from the phone app after you have configured it and use those to control the switch. Note that you may need to send them multiple times to ensure it meets the requirements of being divisible by 16.
+Refer to this thread for similar process: <https://github.com/ericmagnuson/rmcontrol/issues/4#issuecomment-269480450>
 
 ## Installing and Setting up
 
@@ -52,8 +60,10 @@ Now you are ready to copy the config files from the device to use in the node!
 
 ## Copying files from and Android phone
 
-I don't have one, but it should be simpler to find the folder on it and extract it.
+I don't have one, but it should be simpler to find the folder on it and extract it. I did find the below instructions somewhere that you could try.
 Perhaps someone can contribute here?
+
+Connect your Android device to your computer and browse the SD card/External Storage folder `/broadlink/newremote/SharedData/`.
 
 ## Configuring node-red nodes
 
@@ -75,6 +85,7 @@ Start adding extra nodes to fire out the functions you need or inject messages t
 * **Vladimir Filippov** - *Author for the Initial build* - [VladimirSFilippov](https://github.com/VladimirSFilippov)
 * **Mark Funston** - *Documentation and enhancements* - [mlfunston](https://github.com/mlfunston)
 * **Bouni** - *fixed get_energy for SP3S devices* - [Bouni](https://github.com/Bouni)
+* **ivog1** - *fix for UDP close port bug* - [ivog1](https://github.com/ivog1)
 
 ## License
 
@@ -86,7 +97,13 @@ This Node-RED module is based on the great work of **VladimirSFilippov** - [Vlad
 
 ## Changelog
 
-### v1.0.1 (latest)
+### v1.0.2 (latest)
+
+* Updates to readme and supported devices
+* Added details on TC2 support in readme
+* BUGFIX: ivog1 - #4 UDP Ports not being closed
+
+### v1.0.1
 
 * Production v1 Release Fork of VladimirSFilippov's Broadlink node as he seems to have stopped development on it.
 * Updated docs & node info

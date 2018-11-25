@@ -52,6 +52,10 @@
                     msg.payload = dev;
                     node.send(msg);
                 }
+                // --- Fix for UDP ports not being closed
+                _device.cs.close();
+                _device = null;
+                // ---
             }, 3000);//timeout
         });
 
