@@ -86,6 +86,10 @@ Start adding extra nodes to fire out the functions you need or inject messages t
 * **Mark Funston** - *Documentation and enhancements* - [mlfunston](https://github.com/mlfunston)
 * **Bouni** - *fixed get_energy for SP3S devices* - [Bouni](https://github.com/Bouni)
 * **ivog1** - *fix for UDP close port bug* - [ivog1](https://github.com/ivog1)
+* **neroxps** - *fix for MP1 S1 status error bug* - [neroxps](https://github.com/neroxps)
+
+Feel free to fork this and provide updates and new features!
+Don't forget to submit a pull request.
 
 ## License
 
@@ -97,7 +101,11 @@ This Node-RED module is based on the great work of **VladimirSFilippov** - [Vlad
 
 ## Changelog
 
-### v1.0.2 (latest)
+### v1.0.3 (latest)
+
+* BUGFIX: neroxps - #5 MP1 S1 status error
+
+### v1.0.2
 
 * Updates to readme and supported devices
 * Added details on TC2 support in readme
