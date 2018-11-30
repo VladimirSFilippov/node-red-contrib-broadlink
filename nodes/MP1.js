@@ -5,7 +5,7 @@ class MP1 extends Device {
 
         this.on("payload", (err, payload) => {
             var result = {
-                "s1": (Boolean(payload[0x0e] && 0x01)),
+                "s1": (Boolean(payload[0x0e] & 0x01)),
                 "s2": (Boolean(payload[0x0e] & 0x02)),
                 "s3": (Boolean(payload[0x0e] & 0x04)),
                 "s4": (Boolean(payload[0x0e] & 0x08))
