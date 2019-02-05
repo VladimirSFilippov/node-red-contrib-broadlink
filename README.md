@@ -101,7 +101,11 @@ This Node-RED module is based on the great work of **VladimirSFilippov** - [Vlad
 
 ## Changelog
 
-### v1.0.3 (latest)
+### v1.0.4 (latest)
+
+* BUGFIX: sergiocntr - #8 time out error on learn function after 3 seconds. Extended to 30 seconds.
+
+### v1.0.3
 
 * BUGFIX: neroxps - #5 MP1 S1 status error
 

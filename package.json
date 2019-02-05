@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-broadlink-control",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Node Red nodes to control the Broadlink RM devices and other Broadlink home automation nodes.",
   "engines": {
     "node": ">=6.9.5"

@@ -33,7 +33,7 @@
                 if (typeof (msg.payload) != "object") { msg.payload = {}; }
                 _device.cs.close();
                 _device = null;
-            }, 3000); // 3 seconds wait for response from device
+            }, 30000); // 30 seconds wait for response from device
             // ---
             _device.auth();
 
@@ -72,7 +72,7 @@
                     case "learn":
                         if (_config.RFSweep.toString() == "false") {
                             _device.enterLearning();
-                            node.warn("Please tap the remote button.");
+                            node.warn("Please tap the remote button within 30 seconds.");
                             innterval = setInterval(function () { _device.checkData(); }, 1000);
                         }
                         else {
