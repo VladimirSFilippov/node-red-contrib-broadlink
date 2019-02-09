@@ -21,6 +21,13 @@ class Broadlink {
         var address = addresses[0].split('.');
 
         var cs = dgram.createSocket({ type: 'udp4', reuseAddr: true });
+
+        // --- Fix for UDP ports not being closed
+        setTimeout( function() {
+            cs.close();
+            cs = null;
+        }, 10000); // 10 seconds wait for response from device
+
         cs.on('listening', function () {
             cs.setBroadcast(true);
 

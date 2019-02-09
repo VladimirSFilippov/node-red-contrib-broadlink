@@ -101,7 +101,12 @@ This Node-RED module is based on the great work of **VladimirSFilippov** - [Vlad
 
 ## Changelog
 
-### v1.0.4 (latest)
+### v1.0.5 (latest)
+
+* BUGFIX: jairo-futurasmus - #10 time out error on discover function after 3 seconds. Extended to 30 seconds.
+* Enhancement: Added additional device types to the discover logic.
+
+### v1.0.4
 
 * BUGFIX: sergiocntr - #8 time out error on learn function after 3 seconds. Extended to 30 seconds.
 
