@@ -1,134 +1,157 @@
 ﻿[
-  {
-    "id": "d83a8a9b.9e7c28",
-    "type": "inject",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 350,
-    "y": 820,
-    "wires": [ [ "d82bcc26.c222" ] ]
-  },
-  {
-    "id": "cee8453e.290b28",
-    "type": "debug",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "payload",
-    "x": 730,
-    "y": 820,
-    "wires": []
-  },
-  {
-    "id": "bb7800af.513cb",
-    "type": "RM",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "device": "3e89c96c.03d576",
-    "action": "_msg_",
-    "remote": "",
-    "button": "",
-    "repeat": "6",
-    "x": 590,
-    "y": 820,
-    "wires": [ [ "cee8453e.290b28" ] ]
-  },
-  {
-    "id": "d82bcc26.c222",
-    "type": "function",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "func": "//Insert learning code here\nvar data = [38,0,140,0,77,21,18,22,38,21,17,22,17,22,38,21,18,21,18,22,37,22,17,22,18,21,18,22,17,0,3,99,77,21,18,22,38,21,17,22,18,21,38,21,18,22,17,22,38,21,18,21,18,22,17,22,17,0,3,99,77,21,18,22,37,22,17,22,18,21,38,21,18,22,17,22,37,22,18,21,18,22,17,22,18,0,3,100,76,22,18,21,38,21,18,22,17,22,37,22,18,21,18,22,37,22,17,22,18,21,18,22,17,0,3,101,76,22,18,21,39,20,18,22,17,22,37,22,18,21,18,22,37,22,17,22,18,21,18,22,17,0,13,5,0,0,0,0,0,0,0,0,0,0,0,0];\n\nmsg.payload={\n    //\"mac\":\"MAC address of your broadlink rm\",\n    //\"host\":\"IP address of your broadlink rm\",\n    \"action\":\"send\",\n    \"data\":data,\n    \"repeat\":2\n};\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 470,
-    "y": 820,
-    "wires": [ [ "bb7800af.513cb" ] ]
-  },
-  {
-    "id": "92f6d71b.87c5a8",
-    "type": "RM",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "device": "3e89c96c.03d576",
-    "action": "learn",
-    "remote": "",
-    "button": "",
-    "repeat": "6",
-    "x": 470,
-    "y": 740,
-    "wires": [ [ "52a56087.dce5c" ] ]
-  },
-  {
-    "id": "8589e87c.21f308",
-    "type": "inject",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 350,
-    "y": 740,
-    "wires": [ [ "92f6d71b.87c5a8" ] ]
-  },
-  {
-    "id": "de5334fc.b8da08",
-    "type": "debug",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "payload",
-    "x": 730,
-    "y": 740,
-    "wires": []
-  },
-  {
-    "id": "52a56087.dce5c",
-    "type": "json",
-    "z": "54c55246.7e148c",
-    "name": "",
-    "pretty": false,
-    "x": 590,
-    "y": 740,
-    "wires": [ [ "de5334fc.b8da08" ] ]
-  },
-  {
-    "id": "c062f626.4663f8",
-    "type": "comment",
-    "z": "54c55246.7e148c",
-    "name": "Learn",
-    "info": "1. Inject\n2. Tap the remote button\n3. Copy learning code from debug tab",
-    "x": 350,
-    "y": 700,
-    "wires": []
-  },
-  {
-    "id": "52c28611.54a548",
-    "type": "comment",
-    "z": "54c55246.7e148c",
-    "name": "Send learning code",
-    "info": "1. Insert learning code in the function node\n2. Deploy\n3. Inject",
-    "x": 390,
-    "y": 780,
-    "wires": []
-  },
-  {
-    "id": "3e89c96c.03d576",
-    "type": "rmdevice",
-    "z": "",
-    "folder": "D:/SharedData",
-    "mac": "b4430dc30cb3",
-    "host": "192.168.31.14"
-  }
+    {
+        "id": "f43b5608.668fb8",
+        "type": "inject",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 360,
+        "wires": [
+            [
+                "4ed7416f.e4605"
+            ]
+        ]
+    },
+    {
+        "id": "7e782238.85366c",
+        "type": "debug",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 510,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "8736841b.643398",
+        "type": "RM",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "device": "9642927f.9bc8b",
+        "action": "_msg_",
+        "remote": "",
+        "button": "",
+        "x": 370,
+        "y": 360,
+        "wires": [
+            [
+                "7e782238.85366c"
+            ]
+        ]
+    },
+    {
+        "id": "4ed7416f.e4605",
+        "type": "function",
+        "z": "4a169831.7bd978",
+        "name": "Set IR Data",
+        "func": "//Insert learning code here\nvar data = [38,0,140,0,77,21,18,22,38,21,17,22,17,22,38,21,18,21,18,22,37,22,17,22,18,21,18,22,17,0,3,99,77,21,18,22,38,21,17,22,18,21,38,21,18,22,17,22,38,21,18,21,18,22,17,22,17,0,3,99,77,21,18,22,37,22,17,22,18,21,38,21,18,22,17,22,37,22,18,21,18,22,17,22,18,0,3,100,76,22,18,21,38,21,18,22,17,22,37,22,18,21,18,22,37,22,17,22,18,21,18,22,17,0,3,101,76,22,18,21,39,20,18,22,17,22,37,22,18,21,18,22,37,22,17,22,18,21,18,22,17,0,13,5,0,0,0,0,0,0,0,0,0,0,0,0];\n\nmsg.payload={\n    //\"mac\":\"MAC address of your broadlink rm\",\n    //\"host\":\"IP address of your broadlink rm\",\n    \"action\":\"send\",\n    \"data\":data,\n    \"repeat\":2\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 230,
+        "y": 360,
+        "wires": [
+            [
+                "8736841b.643398"
+            ]
+        ]
+    },
+    {
+        "id": "ac0302cc.1943b",
+        "type": "RM",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "device": "9642927f.9bc8b",
+        "action": "learn",
+        "remote": "",
+        "button": "",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "db4a927d.dba42"
+            ]
+        ]
+    },
+    {
+        "id": "4a665352.1a5d0c",
+        "type": "inject",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 280,
+        "wires": [
+            [
+                "ac0302cc.1943b"
+            ]
+        ]
+    },
+    {
+        "id": "aff7c493.75d488",
+        "type": "debug",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "x": 470,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "db4a927d.dba42",
+        "type": "json",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "pretty": false,
+        "x": 330,
+        "y": 280,
+        "wires": [
+            [
+                "aff7c493.75d488"
+            ]
+        ]
+    },
+    {
+        "id": "745f4e02.4fe5b",
+        "type": "comment",
+        "z": "4a169831.7bd978",
+        "name": "Learn",
+        "info": "1. Inject\n2. Tap the remote button\n3. Copy learned code from debug tab",
+        "x": 90,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "232d8d19.4ce052",
+        "type": "comment",
+        "z": "4a169831.7bd978",
+        "name": "Send learned code",
+        "info": "1. Insert learned code in the function node\n2. Deploy\n3. Inject",
+        "x": 130,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "9642927f.9bc8b",
+        "type": "rmdevice",
+        "z": "",
+        "folder": "D:/SharedData",
+        "mac": "b4430dc30cb3",
+        "host": "192.168.31.14"
+    }
 ]

@@ -13,11 +13,11 @@ This is a fork of the work by VladimirSFilippov <https://github.com/VladimirSFil
 
 * RM-Mini 3 - <http://www.ibroadlink.com/rmMini3/>
 * RM-Pro - <http://www.ibroadlink.com/rmPro+/>
+* MP1 - 4 Outlet Power Strip
 
 Note: There are other nodes included per below list, however, I have not tested them as I don't have those devices. So let me know if you've had success using them.
 
 * A1 - Environment Sensor - <http://www.ibroadlink.com/a1/>
-* MP1 - 4 Outlet Power Strip
 * S1C - SmartONE Alarm Kit - <http://www.ibroadlink.com/s1c/>
 * SP2 - WiFi Smart Socket
 
@@ -30,11 +30,15 @@ Add the Broadlink node to node-red through the manage palette tab or command lin
 
 You can either learn commands directly from the RM unit using the node, or from the Broadlink e-control app and export them. You will need the SharedData folder exported from the app as a starting point either way.
 
-## Broadlink App Method
+## Broadlink e-control App Method
 
 First, configure the Broadlink device through the Broadlink e-control app on your smartphone. You will need to copy some files from your device after setup.
 
 For Apple devices use this app: <https://itunes.apple.com/us/app/broadlink-e-control/id793152994?mt=8>
+
+Note: The newer Broadlink IHC / Intelligent Home Center app is not compatible with this method at present. Only the e-control app files work with this node at present. If someone wants to have a go at developing this, please fork and submit a pull request. I will not have time to look at this for a bit.
+
+Secondly, newer firmware / devices may not work with the older e-control app, so you may need to use the database files I have included in the brodlinkDB directory and learn the IR codes directly with the example code.
 
 ## Configuring the Broadlink App
 
@@ -80,6 +84,50 @@ Now you should be able to click on the inject node and fire a signal to your dev
 
 Start adding extra nodes to fire out the functions you need or inject messages to the node to drive it.
 
+## Examples
+
+There are example flows to provide some additional functions / templates to use. You can get the exmple flows from the Node Red hamburger menu (top right corner), choose Import -> Examples -> broadlink-control and pick your example.
+
+### Example 1: Add new button to the RM node database
+
+This example allows modification of the RM node database files (jsonSubIr, jsonButton and jsonIrCode) so you can add new buttons and IR codes without having to re-import from the Broadlink App. New Devices and Buttons can also be added here.
+
+Set your data file location and new device, button name and IR codes in the Config node in the example.
+
+![Image of AddNewButton Example Nodes](https://github.com/mlfunston/node-red-contrib-broadlink-control/blob/mlfunston-edition/examples/AddNewButton.png)
+
+![Image of AddNewButtonSubflow Example Nodes](https://github.com/mlfunston/node-red-contrib-broadlink-control/blob/mlfunston-edition/examples/AddButtonSubflow.png)
+
+**Note:** If your Broadlink files contain any non standard characters eg the degree symbol then it will not load the file correctly. Also I noted that the e-control app put the incorrect quotation marks around some of the parameters, so this may need to be fixed in your file first before using this script. I have supplied some example database files in the broadlinkDB directory.
+
+Example:
+![Image of CorruptCharacters](https://github.com/mlfunston/node-red-contrib-broadlink-control/blob/mlfunston-edition/examples/CorruptCharacters.png)
+
+The " marks are incorrect at the end of name, start and end of OFF and start of index in the example above. Check to make sure yours are correct. This is also what causes "undefined" to be displayed in the button list.
+
+### Example 2: Return IR Codes based on Device and Button Names
+
+This example allows you to pull the IR code out from the data files based on the device and button name. You can then directly send them with the RM node. This allows programmatic selection of the device and button.
+
+Set your data file location and device and button name and the IR codes will be returned in the `msg.payload`.
+
+![Image of GetIRCode Example Nodes](https://github.com/mlfunston/node-red-contrib-broadlink-control/blob/mlfunston-edition/examples/GetIRCode.png)
+
+![Image of GetIRCodeSubflow Example Nodes](https://github.com/mlfunston/node-red-contrib-broadlink-control/blob/mlfunston-edition/examples/GetIRCodeSubflow.png)
+
+### Example 3: Learn and Send Data
+
+This example allows you to Learn an IR code with the RM device and then Send those out directly.
+
+Set your RM device details in the RM nodes in the example and the data string in the function node in the send example. You can use this as an example to programmatically learn and send data from and to the RM device.
+
+![Image of LearnAndSendData Example Nodes](https://github.com/mlfunston/node-red-contrib-broadlink-control/blob/mlfunston-edition/examples/LearnAndSendData.png)
+
+## To Do
+
+* [ ] Create GUI Tool or Example in the Node Red Dashboard to Learn and Send IR Codes
+* [ ] Create function to read the newer DB from the Broadlink IHC App
+
 ## Authors & Contributors
 
 * **Vladimir Filippov** - *Author for the Initial build* - [VladimirSFilippov](https://github.com/VladimirSFilippov)
@@ -101,7 +149,12 @@ This Node-RED module is based on the great work of **VladimirSFilippov** - [Vlad
 
 ## Changelog
 
-### v1.0.5 (latest)
+### v1.0.6 (latest)
+
+* Enhancement: Readme Updated for Broadlink IHC app vs e-control app
+* Enhancement: Updated Example code and documentation for each
+
+### v1.0.5
 
 * BUGFIX: jairo-futurasmus - #10 time out error on discover function after 3 seconds. Extended to 30 seconds.
 * Enhancement: Added additional device types to the discover logic.

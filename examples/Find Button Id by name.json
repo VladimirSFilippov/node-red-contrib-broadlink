@@ -1,183 +1,261 @@
 ﻿[
-  {
-    "id": "c8f60bcb.323ce8",
-    "type": "subflow",
-    "name": "RM Get",
-    "info": "",
-    "in": [
-      {
-        "x": 140,
-        "y": 140,
-        "wires": [ { "id": "2b911716.f52e78" } ]
-      }
-    ],
-    "out": [
-      {
-        "x": 560,
-        "y": 260,
-        "wires": [
-          {
-            "id": "54a58bb8.c5cd84",
-            "port": 0
-          }
+    {
+        "id": "22e4c16c.2f5fce",
+        "type": "subflow",
+        "name": "RM Get",
+        "info": "Get IR Codes from RM node Database based on Device & Button Names\n```\nmsg.deviceName=\"Curtains\";\nmsg.buttonName=\"Open\";\n```",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "d344dd0a.4e41"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 600,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "20766f64.71323",
+                        "port": 0
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  },
-  {
-    "id": "76f938f7.283d48",
-    "type": "file in",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "filename": "",
-    "format": "utf8",
-    "x": 350,
-    "y": 140,
-    "wires": [ [ "8a6c75f0.ec1418" ] ]
-  },
-  {
-    "id": "2b911716.f52e78",
-    "type": "function",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "func": "msg.filename=msg.folder+\"jsonSubIr\";\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 230,
-    "y": 140,
-    "wires": [ [ "76f938f7.283d48" ] ]
-  },
-  {
-    "id": "8a6c75f0.ec1418",
-    "type": "json",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "x": 470,
-    "y": 140,
-    "wires": [ [ "de953cfb.75626" ] ]
-  },
-  {
-    "id": "de953cfb.75626",
-    "type": "function",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "func": "msg.remoteid=msg.payload.filter(function (obj) { if (obj.name == msg.remote) { return true; } })[0].id;\nmsg.filename=msg.folder+\"jsonButton\";\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 230,
-    "y": 180,
-    "wires": [ [ "e1444aed.1c6c28" ] ]
-  },
-  {
-    "id": "e1444aed.1c6c28",
-    "type": "file in",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "filename": "",
-    "format": "utf8",
-    "x": 350,
-    "y": 180,
-    "wires": [ [ "36aeb698.9280ba" ] ]
-  },
-  {
-    "id": "36aeb698.9280ba",
-    "type": "json",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "x": 470,
-    "y": 180,
-    "wires": [ [ "a5e957e.08c63a8" ] ]
-  },
-  {
-    "id": "a5e957e.08c63a8",
-    "type": "function",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "func": "msg.buttonid=msg.payload.filter(function (obj) { if (obj.name == msg.button && obj.subIRId == msg.remoteid) { return true; } })[0].id;\nmsg.filename=msg.folder+\"jsonIrCode\";\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 230,
-    "y": 220,
-    "wires": [ [ "8216cd6a.695a1" ] ]
-  },
-  {
-    "id": "8216cd6a.695a1",
-    "type": "file in",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "filename": "",
-    "format": "utf8",
-    "x": 350,
-    "y": 220,
-    "wires": [ [ "f041d37.141f63" ] ]
-  },
-  {
-    "id": "f041d37.141f63",
-    "type": "json",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "x": 470,
-    "y": 220,
-    "wires": [ [ "54a58bb8.c5cd84" ] ]
-  },
-  {
-    "id": "54a58bb8.c5cd84",
-    "type": "function",
-    "z": "c8f60bcb.323ce8",
-    "name": "",
-    "func": "var data=msg.payload.filter(function (obj) { if (obj.buttonId == msg.buttonid) { return true; } })[0].code;\ndelete msg.filename;\ndelete msg.folder;\nmsg.payload = {};\nmsg.payload.action='send';\nmsg.payload.data=data;\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 230,
-    "y": 260,
-    "wires": [ [] ]
-  },
-  {
-    "id": "7ac8e0e7.fd804",
-    "type": "subflow:c8f60bcb.323ce8",
-    "z": "37e3d071.a4e02",
-    "name": "",
-    "x": 1100,
-    "y": 1140,
-    "wires": [ [ "5131180.d409ee8" ] ]
-  },
-  {
-    "id": "c5d20bd6.691388",
-    "type": "inject",
-    "z": "37e3d071.a4e02",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 770,
-    "y": 1140,
-    "wires": [ [ "30f1f826.f06048" ] ]
-  },
-  {
-    "id": "5131180.d409ee8",
-    "type": "debug",
-    "z": "37e3d071.a4e02",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "true",
-    "x": 1230,
-    "y": 1140,
-    "wires": []
-  },
-  {
-    "id": "30f1f826.f06048",
-    "type": "function",
-    "z": "37e3d071.a4e02",
-    "name": "Шторы - Открыть",
-    "func": "msg.remote=\"Шторы\";\nmsg.button=\"Открыть\";\nmsg.folder=\"/home/pi/Broadlink/\";\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 930,
-    "y": 1140,
-    "wires": [ [ "7ac8e0e7.fd804" ] ]
-  }
+    },
+    {
+        "id": "605bee44.8025d",
+        "type": "comment",
+        "z": "22e4c16c.2f5fce",
+        "name": "Subflow: Return IR Codes based on Device and Button Names",
+        "info": "Based on the inputs of device name and button name, this subflow will return the IR codes from the database.",
+        "x": 250,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "9437e14a.7005",
+        "type": "file in",
+        "z": "22e4c16c.2f5fce",
+        "name": "jsonSubIr",
+        "filename": "",
+        "format": "utf8",
+        "sendError": true,
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "9c496bb6.d89f88"
+            ]
+        ]
+    },
+    {
+        "id": "d344dd0a.4e41",
+        "type": "function",
+        "z": "22e4c16c.2f5fce",
+        "name": "Set jsonSubIr",
+        "func": "msg.filename=msg.folder+\"jsonSubIr\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "9437e14a.7005"
+            ]
+        ]
+    },
+    {
+        "id": "9c496bb6.d89f88",
+        "type": "json",
+        "z": "22e4c16c.2f5fce",
+        "name": "",
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "8f678d81.44d1a"
+            ]
+        ]
+    },
+    {
+        "id": "8f678d81.44d1a",
+        "type": "function",
+        "z": "22e4c16c.2f5fce",
+        "name": "Set jsonButton",
+        "func": "msg.deviceId=msg.payload.filter(function (obj) { if (obj.name == msg.deviceName) { return true; } })[0].id;\nmsg.filename=msg.folder+\"jsonButton\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "38d09658.c4230a"
+            ]
+        ]
+    },
+    {
+        "id": "38d09658.c4230a",
+        "type": "file in",
+        "z": "22e4c16c.2f5fce",
+        "name": "jsonButton",
+        "filename": "",
+        "format": "utf8",
+        "sendError": true,
+        "x": 350,
+        "y": 120,
+        "wires": [
+            [
+                "205ff730.b10e58"
+            ]
+        ]
+    },
+    {
+        "id": "205ff730.b10e58",
+        "type": "json",
+        "z": "22e4c16c.2f5fce",
+        "name": "",
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "7c6490ca.5b976"
+            ]
+        ]
+    },
+    {
+        "id": "7c6490ca.5b976",
+        "type": "function",
+        "z": "22e4c16c.2f5fce",
+        "name": "Set jsonIrCode",
+        "func": "msg.buttonId=msg.payload.filter(function (obj) { if (obj.name == msg.buttonName && obj.subIRId == msg.deviceId) { return true; } })[0].id;\nmsg.filename=msg.folder+\"jsonIrCode\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "5c08a801.0bbb18"
+            ]
+        ]
+    },
+    {
+        "id": "5c08a801.0bbb18",
+        "type": "file in",
+        "z": "22e4c16c.2f5fce",
+        "name": "jsonIrCode",
+        "filename": "",
+        "format": "utf8",
+        "sendError": true,
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "cdb65bdb.e73008"
+            ]
+        ]
+    },
+    {
+        "id": "cdb65bdb.e73008",
+        "type": "json",
+        "z": "22e4c16c.2f5fce",
+        "name": "",
+        "x": 490,
+        "y": 160,
+        "wires": [
+            [
+                "20766f64.71323"
+            ]
+        ]
+    },
+    {
+        "id": "20766f64.71323",
+        "type": "function",
+        "z": "22e4c16c.2f5fce",
+        "name": "Set msg.payload",
+        "func": "var data=msg.payload.filter(function (obj) { if (obj.buttonId == msg.buttonId) { return true; } })[0].code;\ndelete msg.filename;\ndelete msg.folder;\nmsg.payload = {};\nmsg.payload.action='send';\nmsg.payload.data=data;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 190,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e807d86.00eb04",
+        "type": "subflow:22e4c16c.2f5fce",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "54b66d66.ad06e4"
+            ]
+        ]
+    },
+    {
+        "id": "505b2aac.f057b4",
+        "type": "inject",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 180,
+        "wires": [
+            [
+                "d344a5af.807b58"
+            ]
+        ]
+    },
+    {
+        "id": "54b66d66.ad06e4",
+        "type": "debug",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 470,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d344a5af.807b58",
+        "type": "function",
+        "z": "4a169831.7bd978",
+        "name": "Config",
+        "func": "// Add the folder path to the jsonSubIr, jsonButton, and jsonIrCode files below\nmsg.folder=\"/home/pi/Broadlink/\";\n\n// Add the device name below you want to get IR codes for. \nmsg.deviceName=\"Curtains\";\n\n// Insert the name of the button you want to get IR codes for.\nmsg.buttonName=\"Open\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 210,
+        "y": 180,
+        "wires": [
+            [
+                "6e807d86.00eb04"
+            ]
+        ]
+    },
+    {
+        "id": "ecfd34f6.89aed8",
+        "type": "comment",
+        "z": "4a169831.7bd978",
+        "name": "Return IR Codes based on Device and Button Names",
+        "info": "Based on the inputs of device name and button name, this example flow will return the IR codes from the database.",
+        "x": 220,
+        "y": 140,
+        "wires": []
+    }
 ]

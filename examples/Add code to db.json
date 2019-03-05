@@ -1,225 +1,349 @@
 ﻿[
-  {
-    "id": "ca4f089e.409058",
-    "type": "subflow",
-    "name": "RM Add",
-    "info": "Добавлет Кнопку в базу\n```\nmsg.deviceName=\"Вентилятор\";\nmsg.buttonName=\"Включить\";\nmsg.code=[];\n```\nЕсли `deviceName` не будет найдено - добавится новое",
-    "in": [
-      {
-        "x": 360,
-        "y": 260,
-        "wires": [ { "id": "6c5136a.9f25cc8" } ]
-      }
-    ],
-    "out": [
-      {
-        "x": 1100,
-        "y": 420,
-        "wires": [
-          {
-            "id": "d4b25ba8.6c09a8",
-            "port": 0
-          }
+    {
+        "id": "d418a9ce.2a1fa8",
+        "type": "subflow",
+        "name": "RM Add",
+        "info": "Add Button to Database\n```\nmsg.deviceName=\"Air Conditioner\";\nmsg.buttonName=\"Turn On\";\nmsg.code=[];\n```\nIf `deviceName` is not found, a new one will be created\n",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "f5e188de.e541b8"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 920,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "abfe50f6.14659",
+                        "port": 0
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  },
-  {
-    "id": "6c5136a.9f25cc8",
-    "type": "file in",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "filename": "/home/pi/Broadlink/jsonSubIr",
-    "format": "utf8",
-    "x": 540,
-    "y": 260,
-    "wires": [ [ "ed9d59bf.59ba38" ] ]
-  },
-  {
-    "id": "ed9d59bf.59ba38",
-    "type": "json",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "x": 750,
-    "y": 260,
-    "wires": [ [ "ee1052f.25a7ab" ] ]
-  },
-  {
-    "id": "ee1052f.25a7ab",
-    "type": "function",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "func": "msg.devices=msg.payload;\nvar devArr=msg.payload.filter(function(obj){if(obj.name==msg.deviceName) return true;});\n\nif(devArr.length>0){ \n    msg.deviceId=devArr[0].id;\n    return [msg,null];\n}\nelse{\n    msg.deviceId=Math.max.apply(Math,msg.devices.map(function(o){return o.id;}))+1;\n    msg.devices.push({id:msg.deviceId,name: msg.deviceName});\n    msg.payload=msg.devices;\n    return [null,msg];\n}",
-    "outputs": "2",
-    "noerr": 0,
-    "x": 890,
-    "y": 260,
-    "wires": [
-      [ "ca2fc50c.ef5848" ],
-      [ "ca2fc50c.ef5848", "8828b67b.f5b718" ]
-    ]
-  },
-  {
-    "id": "8828b67b.f5b718",
-    "type": "file",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "filename": "",
-    "appendNewline": true,
-    "createDir": false,
-    "overwriteFile": "true",
-    "x": 1070,
-    "y": 220,
-    "wires": []
-  },
-  {
-    "id": "fababd94.6c74c",
-    "type": "file in",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "filename": "/home/pi/Broadlink/jsonButton",
-    "format": "utf8",
-    "x": 550,
-    "y": 320,
-    "wires": [ [ "db8f992b.ba40c8" ] ]
-  },
-  {
-    "id": "db8f992b.ba40c8",
-    "type": "json",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "x": 770,
-    "y": 320,
-    "wires": [ [ "6da18894.2ac5a8" ] ]
-  },
-  {
-    "id": "6da18894.2ac5a8",
-    "type": "function",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "func": "msg.buttons=msg.payload;\nmsg.buttonsId=Math.max.apply(Math,msg.devices.map(function(o){return o.id;}))+1;\nmsg.buttons.push({id:msg.buttonsId,name: msg.buttonName,subIRId:msg.deviceId});\nmsg.payload=msg.buttons;\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 910,
-    "y": 320,
-    "wires": [ [ "48e6b9aa.ab9cc8", "9cb04d9d.eee0b" ] ]
-  },
-  {
-    "id": "ca2fc50c.ef5848",
-    "type": "function",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "func": "\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 1070,
-    "y": 260,
-    "wires": [ [ "fababd94.6c74c" ] ]
-  },
-  {
-    "id": "9cb04d9d.eee0b",
-    "type": "file",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "filename": "",
-    "appendNewline": true,
-    "createDir": false,
-    "overwriteFile": "true",
-    "x": 1070,
-    "y": 320,
-    "wires": []
-  },
-  {
-    "id": "48e6b9aa.ab9cc8",
-    "type": "file in",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "filename": "/home/pi/Broadlink/jsonIrCode",
-    "format": "utf8",
-    "x": 550,
-    "y": 380,
-    "wires": [ [ "56f7b79d.db1658" ] ]
-  },
-  {
-    "id": "56f7b79d.db1658",
-    "type": "json",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "x": 770,
-    "y": 380,
-    "wires": [ [ "d4b25ba8.6c09a8" ] ]
-  },
-  {
-    "id": "d4b25ba8.6c09a8",
-    "type": "function",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "func": "msg.codes=msg.payload;\nmsg.codeId=Math.max.apply(Math,msg.devices.map(function(o){return o.id;}))+1;\nmsg.codes.push({id:msg.codeId,code: msg.code,buttonId:msg.buttonId});\nmsg.payload=msg.codes;\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 910,
-    "y": 380,
-    "wires": [ [ "e981748f.ce9f88" ] ]
-  },
-  {
-    "id": "e981748f.ce9f88",
-    "type": "file",
-    "z": "ca4f089e.409058",
-    "name": "",
-    "filename": "",
-    "appendNewline": true,
-    "createDir": false,
-    "overwriteFile": "true",
-    "x": 1070,
-    "y": 380,
-    "wires": []
-  },
-  {
-    "id": "8c63a574.631278",
-    "type": "subflow:ca4f089e.409058",
-    "z": "37e3d071.a4e02",
-    "name": "",
-    "x": 1020,
-    "y": 1100,
-    "wires": [ [ "b88c2405.f4b498" ] ]
-  },
-  {
-    "id": "f62ba8e6.083fc8",
-    "type": "inject",
-    "z": "37e3d071.a4e02",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 770,
-    "y": 1100,
-    "wires": [ [ "fd61965a.117bc8" ] ]
-  },
-  {
-    "id": "fd61965a.117bc8",
-    "type": "function",
-    "z": "37e3d071.a4e02",
-    "name": "",
-    "func": "msg.deviceName=\"Вентилятор_\";\nmsg.buttonName=\"Включить_\";\nmsg.code=[];\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 890,
-    "y": 1100,
-    "wires": [ [ "8c63a574.631278" ] ]
-  },
-  {
-    "id": "b88c2405.f4b498",
-    "type": "debug",
-    "z": "37e3d071.a4e02",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "true",
-    "x": 1150,
-    "y": 1100,
-    "wires": []
-  }
+    },
+    {
+        "id": "570b3a59.a709e4",
+        "type": "file in",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Read current device list - jsonSubIr",
+        "filename": "",
+        "format": "utf8",
+        "sendError": true,
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "e0196cb1.73de8"
+            ]
+        ]
+    },
+    {
+        "id": "e0196cb1.73de8",
+        "type": "json",
+        "z": "d418a9ce.2a1fa8",
+        "name": "",
+        "x": 610,
+        "y": 100,
+        "wires": [
+            [
+                "71a4878d.fb7118"
+            ]
+        ]
+    },
+    {
+        "id": "71a4878d.fb7118",
+        "type": "function",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Get / Add Devices",
+        "func": "msg.devices=msg.payload;\nvar devArr=msg.payload.filter(function(obj){if(obj.name==msg.deviceName) return true;});\n\nif(devArr.length>0){ \n    msg.deviceId=devArr[0].id;\n    return [msg,null];\n}\nelse{\n    msg.deviceId=Math.max.apply(Math,msg.devices.map(function(o){return o.id;}))+1;\n    msg.devices.push({id:msg.deviceId,name: msg.deviceName});\n    msg.payload=msg.devices;\n    return [null,msg];\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 770,
+        "y": 100,
+        "wires": [
+            [
+                "1345580a.1f5838"
+            ],
+            [
+                "51713d82.47cbb4",
+                "1345580a.1f5838"
+            ]
+        ],
+        "outputLabels": [
+            "Found Device",
+            "New Device"
+        ]
+    },
+    {
+        "id": "51713d82.47cbb4",
+        "type": "file",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Write New Devices",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "x": 990,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "db36c5f7.eba838",
+        "type": "file in",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Read current button list - jsonButton",
+        "filename": "",
+        "format": "utf8",
+        "sendError": true,
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "f0538cf4.380f9"
+            ]
+        ]
+    },
+    {
+        "id": "f0538cf4.380f9",
+        "type": "json",
+        "z": "d418a9ce.2a1fa8",
+        "name": "",
+        "x": 630,
+        "y": 160,
+        "wires": [
+            [
+                "1615055.06b85fb"
+            ]
+        ]
+    },
+    {
+        "id": "1615055.06b85fb",
+        "type": "function",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Get New Button",
+        "func": "msg.buttons=msg.payload;\nmsg.buttonId=Math.max.apply(Math,msg.buttons.map(function(o){return o.id;}))+1;\nmsg.buttons.push({id:msg.buttonId,name: msg.buttonName,subIRId:msg.deviceId});\nmsg.payload=msg.buttons;\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 780,
+        "y": 160,
+        "wires": [
+            [
+                "ea56cf03.2ad85",
+                "17bb8bdd.ea1ad4"
+            ]
+        ]
+    },
+    {
+        "id": "ea56cf03.2ad85",
+        "type": "file",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Write New Buttons",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "x": 990,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68f1fbd0.cba154",
+        "type": "file in",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Get current IR Codes - jsonIrCode",
+        "filename": "",
+        "format": "utf8",
+        "sendError": true,
+        "x": 400,
+        "y": 220,
+        "wires": [
+            [
+                "b9eff276.d71fe"
+            ]
+        ]
+    },
+    {
+        "id": "b9eff276.d71fe",
+        "type": "json",
+        "z": "d418a9ce.2a1fa8",
+        "name": "",
+        "x": 610,
+        "y": 220,
+        "wires": [
+            [
+                "abfe50f6.14659"
+            ]
+        ]
+    },
+    {
+        "id": "abfe50f6.14659",
+        "type": "function",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Get IR Code",
+        "func": "msg.codes=msg.payload;\nmsg.codeId=Math.max.apply(Math,msg.codes.map(function(o){return o.id;}))+1;\nmsg.codes.push({id:msg.codeId,code: msg.code,buttonId:msg.buttonId});\nmsg.payload=msg.codes;\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "ed997fff.240f3"
+            ]
+        ]
+    },
+    {
+        "id": "ed997fff.240f3",
+        "type": "file",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Write New IR Code",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "x": 990,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc615ae5.959be8",
+        "type": "comment",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Subflow: Add button to RM node database",
+        "info": "This subflow checks the current RM Node database files and adds the requested button (and device) to the database with the specified IR codes.",
+        "x": 180,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f5e188de.e541b8",
+        "type": "function",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Set jsonSubIr",
+        "func": "msg.filename=msg.folder+\"jsonSubIr\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "570b3a59.a709e4"
+            ]
+        ]
+    },
+    {
+        "id": "1345580a.1f5838",
+        "type": "function",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Set jsonButton",
+        "func": "msg.filename=msg.folder+\"jsonButton\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "db36c5f7.eba838"
+            ]
+        ]
+    },
+    {
+        "id": "17bb8bdd.ea1ad4",
+        "type": "function",
+        "z": "d418a9ce.2a1fa8",
+        "name": "Set jsonIrCode",
+        "func": "msg.filename=msg.folder+\"jsonIrCode\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "68f1fbd0.cba154"
+            ]
+        ]
+    },
+    {
+        "id": "289e46de.c9f76a",
+        "type": "subflow:d418a9ce.2a1fa8",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "5b4cea2d.ebed84"
+            ]
+        ]
+    },
+    {
+        "id": "5097272b.d061d8",
+        "type": "inject",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "1d7876cb.c4ddd9"
+            ]
+        ]
+    },
+    {
+        "id": "1d7876cb.c4ddd9",
+        "type": "function",
+        "z": "4a169831.7bd978",
+        "name": "Config",
+        "func": "// Add the folder path to the jsonSubIr, jsonButton, and jsonIrCode files below\nmsg.folder=\"/home/pi/Broadlink/\";\n\n// Add the device name below you want to add a button to. \n//If it does not exist a new one will be created.\nmsg.deviceName=\"Air Conditioner\";\n\n// Insert the name of the button you want to add.\nmsg.buttonName=\"Turn On\";\n\n// Insert the learned IR Codes array below or pass these from a learn node.\n//example:  msg.code=[38,0,76,2,111,59,14,42,14,43,14,14,13,16,12,16,12,45,14,14,12,17,12,45,14,42,12,17,12,44,14,15,12,16,13,44,14,43,14,14,12,45,14,42,14,15,12,16,12,45,14,15,12,16,12,44,15,14,12,17,12,16,12,17,12,16,12,17,14,14,13,16,12,16,12,17,12,16,14,14,13,16,12,16,15,14,12,16,13,16,12,16,13,16,12,16,13,44,14,14,12,17,14,14,12,17,11,17,12,45,11,45,12,17,15,14,12,16,12,45,11,17,12,17,12,44,14,14,12,17,12,16,13,16,12,16,12,45,12,44,12,17,12,44,12,45,14,15,12,16,14,14,13,16,12,16,13,44,12,45,14,42,12,17,12,44,14,15,12,16,12,17,12,16,14,15,12,16,12,17,12,16,12,17,12,16,12,17,12,16,12,17,12,16,12,17,12,16,12,17,12,16,12,16,13,16,12,16,12,17,12,16,14,15,12,16,12,17,12,16,12,17,12,16,12,17,12,16,15,14,12,16,12,17,12,16,12,17,12,16,12,16,13,16,13,16,11,17,12,17,13,15,14,14,12,17,12,16,12,17,14,14,12,17,12,16,12,17,12,16,12,17,12,16,12,16,12,17,12,16,12,17,12,45,11,17,12,16,14,15,14,42,14,15,11,0,2,53,115,59,12,44,15,42,14,15,12,16,14,15,11,45,15,14,12,16,14,43,13,43,12,17,12,45,13,15,12,17,12,44,15,42,12,16,13,44,14,42,14,15,12,16,12,45,14,15,12,16,12,45,14,14,12,17,12,16,12,17,12,16,12,17,12,16,12,16,13,16,12,16,14,15,12,16,12,17,12,16,12,17,12,16,14,15,13,15,14,14,13,16,12,44,12,17,12,16,13,16,12,16,15,14,12,45,14,42,14,15,14,14,13,16,12,45,11,17,12,17,12,44,14,15,12,16,12,17,12,16,12,17,12,44,15,42,14,14,12,45,14,43,14,14,13,16,12,16,14,15,12,16,14,42,12,45,14,43,14,14,12,44,14,15,12,16,13,16,14,14,12,17,12,16,12,16,13,16,12,17,14,14,14,15,12,16,12,17,13,15,12,16,13,16,12,16,14,15,12,16,14,15,14,14,14,15,14,14,12,17,12,16,12,16,12,17,12,16,12,17,12,16,12,17,12,16,14,15,12,16,12,17,12,16,12,17,12,16,12,17,12,16,12,16,13,16,14,14,12,17,12,16,12,17,12,16,15,14,14,15,12,16,14,15,12,16,12,17,12,16,12,17,12,16,14,14,12,17,12,45,14,14,12,16,12,17,12,44,12,17,12,0,13,5,0,0,0,0,0,0,0,0,0,0,0,0];\nmsg.code=[];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 210,
+        "y": 80,
+        "wires": [
+            [
+                "289e46de.c9f76a"
+            ]
+        ]
+    },
+    {
+        "id": "5b4cea2d.ebed84",
+        "type": "debug",
+        "z": "4a169831.7bd978",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 470,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "6ed4ba75.142144",
+        "type": "comment",
+        "z": "4a169831.7bd978",
+        "name": "Add new button to the RM node database",
+        "info": "Use the following example to add new buttons (and devices) to the database",
+        "x": 180,
+        "y": 40,
+        "wires": []
+    }
 ]
