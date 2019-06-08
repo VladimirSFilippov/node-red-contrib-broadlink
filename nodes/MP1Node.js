@@ -47,10 +47,17 @@ module.exports = function (RED) {
 
                 switch (_config.action) {
                     case "getState":
-                        _device.check_power_raw();
+                        try {
+                            _device.check_power_raw();
+                        }
+                        catch(err) {
+                            console.log(err);
+                            node.status({fill:"red",shape:"ring",text:"Error - See Console Log"});
+                        }
                         break;
                     case "setState":
-                        _device.set_power_mask(
+                        try {
+                            _device.set_power_mask(
                             parseInt(
                                 [
                                     Number(typeof (_config.s4) != 'boolean' ? JSON.parse(_config.s4) : _config.s4),
@@ -59,6 +66,11 @@ module.exports = function (RED) {
                                     Number(typeof (_config.s1) != 'boolean' ? JSON.parse(_config.s1) : _config.s1)
                                 ].join(''), 2),
                             typeof (_config.state) != 'boolean' ? JSON.parse(_config.state) : _config.state)
+                            }
+                        catch(err) {
+                            console.log(err);
+                            node.status({fill:"red",shape:"ring",text:"Error - See Console Log"});
+                        }
                         if (typeof (msg.payload) != "object") { msg.payload = {}; }
                         msg.payload.state = _config.state;
                         msg.payload.status = "OK";

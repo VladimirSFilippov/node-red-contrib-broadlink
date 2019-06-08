@@ -1,0 +1,129 @@
+﻿<script type="text/javascript">
+    RED.nodes.registerType('rmdevice2', {
+        category: 'config',
+        defaults: {
+            folder: { value: "", required: true, validate: RED.validators.regex(/^((?:[A-Z]:)?(?:\/.+$))/) },
+            mac: { value: "", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{12})$/) },
+            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) }
+        },
+        label: function () {
+            return this.mac.match(/[0-9A-Fa-f]{2}/g).join(':');
+        }
+    });
+</script>
+<script type="text/x-red" data-template-name="rmdevice2">
+    <div class="form-row">
+        <label for="node-config-input-mac"><i class="fa fa-cog"></i> <span data-i18n="rm2.label.mac"></span></label>
+        <input type="text" id="node-config-input-mac" data-i18n="[placeholder]rm2.placeholder.mac">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-cog"></i> <span data-i18n="rm2.label.host"></span></label>
+        <input type="text" id="node-config-input-host" data-i18n="[placeholder]rm2.placeholder.host">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-folder"><i class="fa fa-database"></i> <span data-i18n="rm2.label.folder"></span></label>
+        <input type="text" id="node-config-input-folder" data-i18n="[placeholder]rm2.placeholder.folder">
+    </div>
+</script>
+<script type="text/x-red" data-help-name="rmdevice2" data-lang="en-US">
+    <p><span>Copy the directory <code>/sdcard/broadlink/eControl/</code> from your Android device, and specify the path to it in the <code>Catalog</code> field. In the <code>SharedData</code> directory there should be files named <code>jsonSubIr</code>,<code>jsonButton</code> and <code>jsonIrCode</code> If they do not exist, then it is possible to tap "Share" in the eControl app and "Share with other smartphones in the WI-FI network." After that, the files should appear.</span></p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('RMReceiver', {
+        category: 'broadlink',
+        color: '#A6BBCF',
+        defaults: {
+            name: { value: "" },
+            device: { type: "rmdevice2", required: false },
+            action: { value: "receiver" },
+            remote: { value: "" },
+            button: { value: "" },
+            //repeat: { value: 0 },
+            fix: { value: 1 },
+            RFSweep: { value: "false" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icon_rm.png",
+        oneditprepare: function () {
+
+
+            $("#node-input-action").change(function () {
+                var id = $("#node-input-action option:selected").val();
+                $(".rmaction").hide();
+                $("#rmaction-" + id).show();
+            });
+
+            var node = this, ddConfig = $('#node-input-device'), ddDevice = $('#node-input-remote'), ddButton = $('#node-input-button');
+            function updateRemoteList() {
+                var config = RED.nodes.node(ddConfig.val()),
+                    url = 'broadlink/' + ddConfig.val() + '/remote';
+                $.getJSON(url, function (data) {
+                    ddDevice.children().remove();
+                    for (var i = 0; i < data.length; i++) {
+                        var dev = data[i];
+                        ddDevice.append('<option value="' + dev.id + '">' + dev.name + '</option>');
+                    }
+                    ddDevice.val(node.remote);
+                });
+            }
+            ddConfig.change(function () {
+                updateRemoteList();
+            });
+
+
+
+
+            function updateButtonList() {
+                var config = RED.nodes.node(ddConfig.val()),
+                    url = 'broadlink/' + ddConfig.val() + '/button';
+                $.getJSON(url, function (data) {
+                    ddButton.children().remove();
+                    data = data.filter(function (obj) { if (obj.subIRId == ddDevice.val()) { return true; } });
+                    for (var i = 0; i < data.length; i++) {
+                        var dev = data[i];
+                        ddButton.append('<option value="' + dev.id + '">' + dev.name + '</option>');
+                    }
+                    ddButton.val(node.button);
+                });
+            }
+            ddDevice.change(function () {
+                updateButtonList();
+            });
+        },
+        label: function () {
+            return this.name || "RMReceiver";
+        },
+        inputLabels: "parameter for input",
+        outputLabels: ["output"]
+    });
+</script>
+<script type="text/x-red" data-template-name="RMReceiver">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="rm2.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]rm2.placeholder.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-device"><i class="fa fa-cog"></i> <span data-i18n="rm2.label.device"></span></label>
+        <input type="text" id="node-input-device">
+    </div>
+    <div class="form-row">
+        <label for="node-input-action"><i class="fa fa-code-fork"></i> <span data-i18n="rm2.label.action"></span></label>
+        <select id="node-input-action" style="width:70%">
+            <option value="_msg_" data-i18n="rm2.label.option_action_msg"></option>
+            <option value="receiver" data-i18n="rm2.label.option_action_receiver"></option>
+        </select>
+    </div>
+    <div class="form-row rmaction" id="rmaction-receiver">
+        <label for="node-input-RFSweep"><i class="fa fa-search"></i> <span data-i18n="rm2.label.RFSweep"></span></label>
+        <select id="node-input-RFSweep" style="width:70%">
+            <option value="true" data-i18n="rm2.label.yes"></option>
+            <option value="false" data-i18n="rm2.label.no"></option>
+        </select>
+    </div>
+</script>
+<script type="text/x-red" data-help-name="RMReceiver" data-lang="en-US">
+    <p><span >A node that allows you to receive IR data from your Broadlink RM.</span></p>
+    <p><span >Select the Broadlink device in the config and it will be configured to read and stream IR data.</span></p>
+</script>

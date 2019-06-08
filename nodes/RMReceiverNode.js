@@ -13,10 +13,10 @@
         //    if (b.devices[n.mac] !== undefined) node.host = b.devices[n.mac].address;
         //}, 3000);
     }
-    RED.nodes.registerType("rmdevice", NodeDevice);
+    RED.nodes.registerType("rmdevice2", NodeDevice);
 
     var RM = require("./RM.js");
-    function broadlinkNode(config) {
+    function broadlinkReceiverNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
         this.on('input', function (msg) {
@@ -49,7 +49,7 @@
                 if (typeof (msg.payload) != "object") { msg.payload = {}; }
                 msg.payload.data = temp;
                 node.send(msg);
-                clearInterval(innterval);
+                //clearInterval(innterval);
             });
             _device.on("rawRFData", (temp) => {
                 if (typeof (msg.payload) != "object") { msg.payload = {}; }
@@ -71,7 +71,7 @@
                 if (_config.action == "_msg_") { _config.action = msg.payload.action; _config.remote = msg.payload.remote; _config.button = msg.payload.button; _config.fix = msg.payload.fix; _config.RFSweep = msg.payload.RFSweep; _config.data = (msg.payload.data != undefined && typeof (msg.payload.data) == "string") ? JSON.parse(msg.payload.data) : ((msg.payload.data != undefined && typeof (msg.payload.data) == "object") ? msg.payload.data : undefined); }
 
                 switch (_config.action) {
-                    case "learn":
+                    case "receiver":
                         if (_config.RFSweep.toString() == "false") {
                             _device.enterLearning();
                             node.warn("Please tap the remote button within 30 seconds.");
@@ -140,7 +140,7 @@
         });
 
     }
-    RED.nodes.registerType("RM", broadlinkNode);
+    RED.nodes.registerType("RMReceiver", broadlinkReceiverNode);
 
     RED.httpAdmin.get('/broadlink/scan', RED.auth.needsPermission('broadlink.read'), function (req, res) {
         var b = new Broadlink();

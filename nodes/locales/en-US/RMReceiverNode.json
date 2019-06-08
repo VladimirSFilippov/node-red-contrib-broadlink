@@ -1,0 +1,37 @@
+﻿{
+  "rm2": {
+    "label": {
+      "device": "Device",
+      "mac": "MAC",
+      "host": "IP Address",
+      "loading": "Loading...",
+      "name": "Name",
+      "folder": "Catalog",
+      "action": "Action",
+      "option_action_msg": "- Set from msg.payload -",
+      "option_action_receiver": "Receiver",
+      "option_action_send": "Send",
+      "option_action_temperature": "Temperature",
+      "remote": "Remote",
+      "button": "Button",
+      "inputLabels": "parameter for input",
+      "outputLabels": "output",
+      "yes": "Yes",
+      "no": "No",
+      "RFSweep": "RF Sweep"
+
+    },
+    "placeholder": {
+      "folder": "D:/SharedData",
+      "name": "Name",
+      "mac": "FFFFFFFFFFFF",
+      "host": "192.168.10.2"
+    },
+    "status": {
+    },
+    "error": {
+    },
+    "message": {
+    }
+  }
+}
