@@ -94,7 +94,7 @@ This example allows modification of the RM node database files (jsonSubIr, jsonB
 
 Set your data file location and new device, button name and IR codes in the Config node in the example.
 
-![Image of AddNewButton Example Nodes](https://raw.githubusercontent.com/mlfunston/node-red-contrib-broadlink-control/mlfunston-edition/examples/AddNewButton.png)
+![Image of AddNewButton Example Nodes](examples/AddNewButton.png)
 
 ![Image of AddNewButtonSubflow Example Nodes](https://raw.githubusercontent.com/mlfunston/node-red-contrib-broadlink-control/mlfunston-edition/examples/AddButtonSubflow.png)
 
@@ -125,7 +125,7 @@ Set your RM device details in the RM nodes in the example and the data string in
 
 ## To Do
 
-* [x] Create GUI Tool or Example in the Node Red Dashboard to Learn and Send IR Codes
+* [x] Create GUI Tool or Example in the Node Red Dashboard to Learn and Send IR Codes - Check out the example nodes
 * [ ] Create function to read the newer DB from the Broadlink IHC App
 
 ## Authors & Contributors
@@ -149,13 +149,19 @@ This Node-RED module is based on the great work of **VladimirSFilippov** - [Vlad
 
 ## Changelog
 
-### v1.0.7 (latest)
+### v1.0.8 (latest)
+
+* Enhancement: Add new device ID's for RM Pro 4 - Needs testing. May need additional headers for RM4
+* BUGFIX: Possible fix for issue #7 for incorrect energy reading on SP2 - Needs testing from users
+
+### v1.0.7
 
 * Enhancement: Readme Updated to fix image links
-* Enhancement: Added RM IR Receiver Node for issue #15
+* Enhancement: [ALPHA] Added RM IR Receiver Node for issue #15
 * Enhancement: Improve error handling in RMNode for issue #12
-* BUGFIX: Improve error handling in MP1Node for issue #11
+* BUGFIX: Improve error handling in MP1Node for issue #11 and add improved help text
 * BUGFIX: Improve error handling in RMNode for data timeouts - issue #14
+* BUGFIX: Fix typo on msg.payload.fix that is returned on send of data to RMNode
 
 ### v1.0.6
 

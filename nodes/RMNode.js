@@ -116,7 +116,7 @@
                                 msg.payload.status = "OK";
                                 msg.payload.code = code;
                                 msg.payload._code = _code;
-                                msg.payload.f = _config.fix;
+                                msg.payload.fix = _config.fix;
                                 node.send(msg);
                             });
                         }

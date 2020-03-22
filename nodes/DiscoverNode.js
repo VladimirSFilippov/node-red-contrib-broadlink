@@ -40,6 +40,15 @@
                     else if (devtype == 0x4EB5) return 'MP1';
                     else if (devtype == 0x4ef7) return 'Honyar OEM MP1';
                     else if (devtype == 0x2722) return 'S1(SmartOne Alarm Kit)';
+                    else if (devtype == 0x6026) return 'RM4 Pro';
+                    else if (devtype == 0x7d11) return 'SP Mini 3';
+                    else if (devtype == 0x27d1) return 'New RM Mini 3';
+                    else if (devtype == 0x4e97) return 'RM4 Mini';
+                    else if (devtype == 0x5f36) return 'RM Mini 3 newer';
+                    else if (devtype == 0x51da) return 'RM4b';
+                    else if (devtype == 0x610e) return 'RM4 Mini';
+                    else if (devtype == 0x610f) return 'RM4c';
+                    else if (devtype == 0x62be) return 'RM4c';
                     else return 'Unconfigured Device Type: Log an issue with the device details and typeid returned as this may be a new device type.';
                 }
                 

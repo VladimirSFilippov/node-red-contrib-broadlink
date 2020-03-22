@@ -12,7 +12,14 @@ class SP2 extends Device {
                     this.emit("data", Boolean(payload[0x4]));
                     break;
                 case 0x08:
-                    this.emit("energy", { energy: (payload[7] * 256 + payload[6]) + payload[5] / 100.0}); 
+                    if (Number.isInteger(payload[7])) //possible fix for issue #7
+                    {
+                        this.emit("energy", { energy: (payload[7] * 256 + payload[6]) + payload[5] / 100.0}); 
+                    }
+                    else
+                    {
+                        this.emit("energy", { energy: (payload[7].charCodeAt(0) * 256 + payload[6].charCodeAt(0)) + payload[5].charCodeAt(0) / 100.0}); 
+                    }
                     break;
             }
         });

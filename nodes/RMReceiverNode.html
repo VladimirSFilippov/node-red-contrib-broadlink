@@ -41,6 +41,7 @@
             button: { value: "" },
             //repeat: { value: 0 },
             fix: { value: 1 },
+            poll: { value: 1000 },
             RFSweep: { value: "false" }
         },
         inputs: 1,
@@ -122,8 +123,13 @@
             <option value="false" data-i18n="rm2.label.no"></option>
         </select>
     </div>
+    <div class="form-row">
+        <label for="node-input-poll"><i class="fa fa-clock-o"></i> <span data-i18n="rm2.label.poll"></span></label>
+        <input type="text" id="node-input-poll">
+    </div>
 </script>
 <script type="text/x-red" data-help-name="RMReceiver" data-lang="en-US">
+    <H3>ALPHA VERSION</H3>
     <p><span >A node that allows you to receive IR data from your Broadlink RM.</span></p>
     <p><span >Select the Broadlink device in the config and it will be configured to read and stream IR data.</span></p>
 </script>
