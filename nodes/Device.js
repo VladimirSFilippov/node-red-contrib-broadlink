@@ -1,11 +1,12 @@
-﻿let EventEmitter = require('events');
+let EventEmitter = require('events');
 let dgram = require('dgram');
 let os = require('os');
 let crypto = require('crypto');
 class Device {
-    constructor(host, mac, timeout = 10) {
+    constructor(host, mac, type, timeout = 10) {
         this.host = host;
         this.mac = mac;
+        this.type = type;
         this.emitter = new EventEmitter();
 
         this.on = this.emitter.on;
@@ -67,8 +68,8 @@ class Device {
         packet[0x05] = 0xa5;
         packet[0x06] = 0xaa;
         packet[0x07] = 0x55;
-        packet[0x24] = 0x2a;
-        packet[0x25] = 0x27;
+        packet[0x24] = this.type & 0xff;
+        packet[0x25] = this.type >> 8;
         packet[0x26] = command;
         packet[0x28] = this.count & 0xff;
         packet[0x29] = this.count >> 8;

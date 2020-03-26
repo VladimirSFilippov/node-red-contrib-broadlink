@@ -4,7 +4,8 @@
         defaults: {
             folder: { value: "", required: true, validate: RED.validators.regex(/^((?:[A-Z]:)?(?:\/.+$))/) },
             mac: { value: "", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{12})$/) },
-            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) }
+            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) },
+            type: { value: "272a", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{4})$/) }
         },
         label: function () {
             return this.mac.match(/[0-9A-Fa-f]{2}/g).join(':');
@@ -19,6 +20,10 @@
     <div class="form-row">
         <label for="node-config-input-host"><i class="fa fa-cog"></i> <span data-i18n="rm.label.host"></span></label>
         <input type="text" id="node-config-input-host" data-i18n="[placeholder]rm.placeholder.host">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-type"><i class="fa fa-cog"></i> <span data-i18n="rm.label.type"></span></label>
+        <input type="text" id="node-config-input-type" data-i18n="[placeholder]rm.placeholder.type">
     </div>
     <div class="form-row">
         <label for="node-config-input-folder"><i class="fa fa-database"></i> <span data-i18n="rm.label.folder"></span></label>
