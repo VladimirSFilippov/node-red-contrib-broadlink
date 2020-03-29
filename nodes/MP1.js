@@ -1,7 +1,7 @@
 ﻿var Device = require("./Device.js");
 class MP1 extends Device {
-    constructor(host, mac, timeout = 10) {
-        super(host, mac, timeout);
+    constructor(host, mac, devType = "272a", timeout = 10) {
+        super(host, mac, devType, timeout);
 
         this.on("payload", (err, payload) => {
             var result = {
