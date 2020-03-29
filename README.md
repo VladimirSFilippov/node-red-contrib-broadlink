@@ -71,11 +71,11 @@ Connect your Android device to your computer and browse the SD card/External Sto
 
 ## Configuring node-red nodes
 
-Assuming you have added the Broadlink nodes and configured as above, you will need the MAC address of the device, IP address and the path to the SharedData folder above.
+Assuming you have added the Broadlink nodes and configured as above, you will need the MAC address of the device, IP address and the path to the SharedData folder above. For device type, if you are having older device you can let default value `272a`. Newer devices like new RM3 or RM4 have to put correct device type. You can find your device type via discover node.
 
 1. Add the RM node and double click it
 2. Select device and `add new rmdevice`
-3. Fill in the MAC address of the device, IP address and the full path to the SharedData folder in the `Catalog` field and click `Add`
+3. Fill in the MAC address of the device, IP address, device type and the full path to the SharedData folder in the `Catalog` field and click `Add`
 4. You will then need to save the node and click `Deploy` so that you can see the buttons you created in the Broadlink app in the node.
 5. Double click on the node again and you should be now able to select Action -> Send and then pick the remote and button you wish to send.
 6. Save node, add an inject node on the front and link them together and deploy.

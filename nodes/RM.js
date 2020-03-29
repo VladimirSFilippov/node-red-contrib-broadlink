@@ -75,7 +75,6 @@ class RM extends Device {
         this.sendPacket(0x6a, packet);
     }
     checkData() {
-        console.log('checkdata');
         var packet = Buffer.alloc(16, 0);
         if (constants.RM4.indexOf(this.devType) > -1) {
             packet[0] = 4;
