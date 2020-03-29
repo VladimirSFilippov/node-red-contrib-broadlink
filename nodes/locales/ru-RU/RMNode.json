@@ -4,7 +4,7 @@
       "device": "Устройство",
       "mac": "MAC адрес",
       "host": "IP адрес",
-      "type": "тип",
+      "devType": "тип",
       "loading": "Поиск...",
       "folder": "Каталог",
       "name": "Имя",
@@ -25,7 +25,7 @@
     "placeholder": {
       "folder": "D:/SharedData",
       "name": "Имя",
-      "type": "272a",
+      "devType": "272a",
       "mac": "FFFFFFFFFFFF",
       "host": "192.168.10.2"
     },

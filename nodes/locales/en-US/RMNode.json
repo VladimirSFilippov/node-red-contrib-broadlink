@@ -3,7 +3,7 @@
     "label": {
       "device": "Device",
       "mac": "MAC",
-      "type": "Type",
+      "devType": "Type",
       "host": "IP Address",
       "loading": "Loading...",
       "name": "Name",
@@ -25,7 +25,7 @@
     "placeholder": {
       "folder": "D:/SharedData",
       "name": "Name",
-      "type": "272a",
+      "devType": "272a",
       "mac": "FFFFFFFFFFFF",
       "host": "192.168.10.2"
     },

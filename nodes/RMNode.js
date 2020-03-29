@@ -4,7 +4,7 @@
         RED.nodes.createNode(this, n);
         this.mac = n.mac.match(/[0-9A-Fa-f]{2}/g) != null ? new Buffer(n.mac.match(/[0-9A-Fa-f]{2}/g).map(function (num) { return parseInt(num, 16); })) : null;
         this.host = n.host;
-        this.type = n.type;
+        this.devType = n.devType;
         this.folder = n.folder;
 
         //var node = this;
@@ -24,10 +24,10 @@
             var conf = RED.nodes.getNode(config.device);
             var _device;
             if (conf != null && conf != undefined && conf != "") {
-                var _device = new RM({ address: conf.host, port: 80 }, conf.mac, conf.type);
+                var _device = new RM({ address: conf.host, port: 80 }, conf.mac, conf.devType);
             }
             else {
-                var _device = new RM({ address: msg.payload.host, port: 80 }, new Buffer(msg.payload.mac.replace(':', '').replace('-', '').match(/[0-9A-Fa-f]{2}/g).map(function (num) { return parseInt(num, 16); })), msg.payload.type);
+                var _device = new RM({ address: msg.payload.host, port: 80 }, new Buffer(msg.payload.mac.replace(':', '').replace('-', '').match(/[0-9A-Fa-f]{2}/g).map(function (num) { return parseInt(num, 16); })), msg.payload.devType);
             }
             // --- Fix for UDP ports not being closed
             setTimeout( function() {

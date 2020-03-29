@@ -1,10 +1,13 @@
 ﻿var Device = require("./Device.js");
 var constants = require('./Constants.js');
 class RM extends Device {
-    constructor(host, mac, type, timeout = 10) {
-        super(host, mac, type, timeout);
+    constructor(host, mac, devType, timeout = 10) {
+        super(host, mac, devType, timeout);
 
         this.on("payload", (err, payload) => {
+            if (constants.RM4.indexOf(devType) > -1) {
+                payload.copy(payload, 0, 2);
+            }
             var param = payload[0];
             switch (param) {
                 case 1:
@@ -49,7 +52,7 @@ class RM extends Device {
 
     checkTemperature() {
         var packet = Buffer.alloc(16, 0);
-        if (constants.RM4.indexOf(this.type) > -1) {
+        if (constants.RM4.indexOf(this.devType) > -1) {
             packet[0] = 4;
             packet[1] = 0;
             packet[2] = 1;
@@ -62,7 +65,7 @@ class RM extends Device {
 
     enterLearning() {
         var packet = Buffer.alloc(16, 0);
-        if (constants.RM4.indexOf(this.type) > -1) {
+        if (constants.RM4.indexOf(this.devType) > -1) {
             packet[0] = 4;
             packet[1] = 0;
             packet[2] = 3;
@@ -72,8 +75,9 @@ class RM extends Device {
         this.sendPacket(0x6a, packet);
     }
     checkData() {
+        console.log('checkdata');
         var packet = Buffer.alloc(16, 0);
-        if (constants.RM4.indexOf(this.type) > -1) {
+        if (constants.RM4.indexOf(this.devType) > -1) {
             packet[0] = 4;
             packet[1] = 0;
             packet[2] = 4;
@@ -85,7 +89,7 @@ class RM extends Device {
 
     sendData(data) {
         var packet;
-        if (constants.RM4.indexOf(this.type) > -1) {
+        if (constants.RM4.indexOf(this.devType) > -1) {
             packet = new Buffer([0xd0, 0x00, 0x02, 0x00, 0x00, 0x00]);
         } else {
             packet = new Buffer([0x02, 0x00, 0x00, 0x00]);
