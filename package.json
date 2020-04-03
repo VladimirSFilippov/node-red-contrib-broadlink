@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-broadlink-control",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Node Red nodes to control the Broadlink RM devices and other Broadlink home automation nodes.",
   "engines": {
     "node": ">=6.9.5"
@@ -51,6 +51,10 @@
     {
       "name": "Bouni",
       "url": "https://github.com/Bouni"
+    },
+    {
+      "name": "deadly667",
+      "url": "https://github.com/deadly667"
     }
   ],
   "bugs": {

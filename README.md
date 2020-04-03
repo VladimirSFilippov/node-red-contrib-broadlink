@@ -9,10 +9,13 @@ A set of node-red nodes to manage the Broadlink <http://www.ibroadlink.com/> RM 
 
 This is a fork of the work by VladimirSFilippov <https://github.com/VladimirSFilippov/node-red-contrib-broadlink> with some enhancements and additions I was looking for, including documentation.
 
+Note: Version 2 includes updates for the newer RM4 and other devices and requires a device type setting to be added to your device configs if you are upgrading.
+
 ## Supported Devices
 
 * RM-Mini 3 - <http://www.ibroadlink.com/rmMini3/>
 * RM-Pro - <http://www.ibroadlink.com/rmPro+/>
+* RM 4 and newer mini devices
 * MP1 - 4 Outlet Power Strip
 
 Note: There are other nodes included per below list, however, I have not tested them as I don't have those devices. So let me know if you've had success using them.
@@ -71,7 +74,7 @@ Connect your Android device to your computer and browse the SD card/External Sto
 
 ## Configuring node-red nodes
 
-Assuming you have added the Broadlink nodes and configured as above, you will need the MAC address of the device, IP address and the path to the SharedData folder above. For device type, if you are having older device you can let default value `272a`. Newer devices like new RM3 or RM4 have to put correct device type. You can find your device type via discover node.
+Assuming you have added the Broadlink nodes and configured as above, you will need the MAC address of the device, IP address and the path to the SharedData folder above. For device type, if you have an older device you can set the default value to `272a`. Newer RM3 devices or RM4 requires the correct device type to be entered. You can find your device type via the discover node. Check the example nodes below.
 
 1. Add the RM node and double click it
 2. Select device and `add new rmdevice`
@@ -94,7 +97,7 @@ This example allows modification of the RM node database files (jsonSubIr, jsonB
 
 Set your data file location and new device, button name and IR codes in the Config node in the example.
 
-![Image of AddNewButton Example Nodes](examples/AddNewButton.png)
+![Image of AddNewButton Example Nodes](https://raw.githubusercontent.com/mlfunston/node-red-contrib-broadlink-control/mlfunston-edition/examples/AddNewButton.png)
 
 ![Image of AddNewButtonSubflow Example Nodes](https://raw.githubusercontent.com/mlfunston/node-red-contrib-broadlink-control/mlfunston-edition/examples/AddButtonSubflow.png)
 
@@ -135,6 +138,7 @@ Set your RM device details in the RM nodes in the example and the data string in
 * **Bouni** - *fixed get_energy for SP3S devices* - [Bouni](https://github.com/Bouni)
 * **ivog1** - *fix for UDP close port bug* - [ivog1](https://github.com/ivog1)
 * **neroxps** - *fix for MP1 S1 status error bug* - [neroxps](https://github.com/neroxps)
+* **deadly667** - *fix for newer device headers RM4, etc* [deadly667](https://github.com/deadly667)
 
 Feel free to fork this and provide updates and new features!
 Don't forget to submit a pull request.
@@ -146,10 +150,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 This Node-RED module is based on the great work of **VladimirSFilippov** - [VladimirSFilippov](https://github.com/VladimirSFilippov), using his [node-red-contrib-broadlink](https://github.com/VladimirSFilippov/node-red-contrib-broadlink) libraries.
+Also thanks to the [python-broadlink](https://github.com/mjg59/python-broadlink) repository from [Matthew Garrett](https://github.com/mjg59).
 
 ## Changelog
 
-### v1.0.8 (latest)
+### v2.0.0 (latest)
+
+Note - This version introduces a new field in the device configuration which will require a manual change to each device configuration.
+
+* Enhancement: Add support for newer devices and fix header issues for them.
+* BUGFIX: Fixes for issues related to newer devices: issues #25, #23, #22, #20.
+
+### v1.0.8
 
 * Enhancement: Add new device ID's for RM Pro 4 - Needs testing. May need additional headers for RM4
 * BUGFIX: Possible fix for issue #7 for incorrect energy reading on SP2 - Needs testing from users
