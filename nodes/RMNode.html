@@ -4,7 +4,8 @@
         defaults: {
             folder: { value: "", required: true, validate: RED.validators.regex(/^((?:[A-Z]:)?(?:\/.+$))/) },
             mac: { value: "", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{12})$/) },
-            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) }
+            host: { value: "", required: true, validate: RED.validators.regex(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/) },
+            devType: { value: "272a", required: true, validate: RED.validators.regex(/^([0-9A-Fa-f]{4})$/) }
         },
         label: function () {
             return this.mac.match(/[0-9A-Fa-f]{2}/g).join(':');
@@ -21,6 +22,10 @@
         <input type="text" id="node-config-input-host" data-i18n="[placeholder]rm.placeholder.host">
     </div>
     <div class="form-row">
+        <label for="node-config-input-devType"><i class="fa fa-cog"></i> <span data-i18n="rm.label.devType"></span></label>
+        <input type="text" id="node-config-input-devType" data-i18n="[placeholder]rm.placeholder.devType">
+    </div>
+    <div class="form-row">
         <label for="node-config-input-folder"><i class="fa fa-database"></i> <span data-i18n="rm.label.folder"></span></label>
         <input type="text" id="node-config-input-folder" data-i18n="[placeholder]rm.placeholder.folder">
     </div>
@@ -30,6 +35,7 @@
 </script>
 <script type="text/x-red" data-help-name="rmdevice" data-lang="en-US">
     <p><span>Copy the directory <code>/sdcard/broadlink/eControl/</code> from your Android device, and specify the path to it in the <code>Catalog</code> field. In the <code>SharedData</code> directory there should be files named <code>jsonSubIr</code>,<code>jsonButton</code> and <code>jsonIrCode</code> If they do not exist, then it is possible to tap "Share" in the eControl app and "Share with other smartphones in the WI-FI network." After that, the files should appear.</span></p>
+    <p><span>For device type, if you are having older device you can let default value <code>272a</code>. Newer devices like new RM3 or RM4 have to put correct device type. You can find your device type via discover node.</span></p>
 </script>
 
 <script type="text/javascript">
