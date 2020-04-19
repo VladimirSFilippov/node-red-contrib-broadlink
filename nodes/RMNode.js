@@ -24,7 +24,12 @@
             var conf = RED.nodes.getNode(config.device);
             var _device;
             if (conf != null && conf != undefined && conf != "") {
-                var _device = new RM({ address: conf.host, port: 80 }, conf.mac, conf.devType);
+                if (conf.devType.length > 0){
+                    var _device = new RM({ address: conf.host, port: 80 }, conf.mac, conf.devType);
+                }
+                else {
+                    var _device = new RM({ address: conf.host, port: 80 }, conf.mac, '272a'); //default device type is blank
+                }
             }
             else {
                 var _device = new RM({ address: msg.payload.host, port: 80 }, new Buffer(msg.payload.mac.replace(':', '').replace('-', '').match(/[0-9A-Fa-f]{2}/g).map(function (num) { return parseInt(num, 16); })), msg.payload.devType);
@@ -33,7 +38,7 @@
             setTimeout( function() {
                 if (typeof (msg.payload) != "object") { msg.payload = {}; }
                 clearInterval(innterval);
-                node.warn("Broadlink Timeout Received - Closing Device Connection");
+                node.log("Broadlink: Closing Device Connection");
                 _device.cs.close();
                 _device = null;
             }, 30000); // 30 seconds wait for response from device
@@ -44,11 +49,13 @@
             _device.on("temperature", (temp) => {
                 if (typeof (msg.payload) != "object") { msg.payload = {}; }
                 msg.payload.temperature = temp;
+                node.status({fill:"green",shape:"dot",text:"Temperature Reading Received"});
                 node.send(msg);
             });
             _device.on("data", (temp) => {
                 if (typeof (msg.payload) != "object") { msg.payload = {}; }
                 msg.payload.data = temp;
+                node.status({fill:"green",shape:"dot",text:"Data Received"});
                 node.send(msg);
                 clearInterval(innterval);
             });
@@ -57,7 +64,7 @@
                 msg.payload.data = temp;
                 clearInterval(innterval);
 
-                node.warn("Please tap the remote button.");
+                node.warn("Broadlink: Please tap the remote button.");
                     innterval = setInterval(function () { _device.checkRFData2(); }, 1000);
             });
             _device.on("rawRFData2", (temp) => {
@@ -67,21 +74,31 @@
                 innterval = setInterval(function () { _device.checkData(); }, 1000);
             });
             _device.on("deviceReady", (devm) => {
-
+                node.status({fill:"grey",shape:"ring",text:"Broadlink Device Ready"});
                 var _config = { action: config.action, remote: config.remote, button: config.button, fix: config.fix, RFSweep: config.RFSweep, data: undefined };//, repeat: config.repeat _config.repeat = msg.payload.repeat; 
                 if (_config.action == "_msg_") { _config.action = msg.payload.action; _config.remote = msg.payload.remote; _config.button = msg.payload.button; _config.fix = msg.payload.fix; _config.RFSweep = msg.payload.RFSweep; _config.data = (msg.payload.data != undefined && typeof (msg.payload.data) == "string") ? JSON.parse(msg.payload.data) : ((msg.payload.data != undefined && typeof (msg.payload.data) == "object") ? msg.payload.data : undefined); }
 
                 switch (_config.action) {
                     case "learn":
-                        if (_config.RFSweep.toString() == "false") {
+                        if (_config.RFSweep === undefined) { //No data passed in this field
                             _device.enterLearning();
-                            node.warn("Please tap the remote button within 30 seconds.");
+                            node.status({fill:"green",shape:"ring",text:"Learning IR - Please press remote button"});
+                            node.warn("Broadlink: IR Scan - Please tap the remote button within 30 seconds.");
                             innterval = setInterval(function () { _device.checkData(); }, 1000);
                         }
                         else {
-                            _device.enterRFSweep();
-                            node.warn("Please keep long press on the remote button until scan finishes.");
+                            if (_config.RFSweep.toString() == "false") {
+                                _device.enterLearning();
+                                node.status({fill:"green",shape:"ring",text:"Learning IR - Please press remote button"});
+                                node.warn("Broadlink: IR Scan - Please tap the remote button within 30 seconds.");
+                                innterval = setInterval(function () { _device.checkData(); }, 1000);
+                            }
+                            else {
+                                _device.enterRFSweep();
+                                node.status({fill:"green",shape:"ring",text:"Learning RF - Please long press remote button"});
+                                node.warn("Broadlink: RF Scan - Please keep long press on the remote button until scan finishes.");
                                 innterval = setInterval(function () { _device.checkRFData(); }, 1000);
+                            }
                         }
                         break;
                     case "send":
@@ -108,8 +125,9 @@
                                     _code = _code.concat(code);
                                 }
 
-
+                                node.status({fill:"green",shape:"ring",text:"Sending Data"});
                                 _device.sendData(new Buffer(_code));
+                                node.status({fill:"green",shape:"dot",text:"Data Sent"});
 
                                 if (typeof (msg.payload) != "object") { msg.payload = {}; }
                                 msg.payload.remote = _config.remote;
@@ -124,8 +142,9 @@
                         else {
                             var code = new Buffer(_config.data);
                             //if (_config.repeat != undefined && code[1] == 0) code[1] = _config.repeat;
+                            node.status({fill:"green",shape:"ring",text:"Sending Data"});
                             _device.sendData(code);
-
+                            node.status({fill:"green",shape:"dot",text:"Data Sent"});
 
                             if (typeof (msg.payload) != "object") { msg.payload = {}; }
                             msg.payload.data = _config.data;
@@ -134,7 +153,9 @@
                         }
                         break;
                     case "temperature":
+                        node.status({fill:"green",shape:"ring",text:"Checking Temperature"});
                         _device.checkTemperature();
+                        node.status({fill:"green",shape:"dot",text:"Temperature Request Sent"});
                         break;
                 }
             });

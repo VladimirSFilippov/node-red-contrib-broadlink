@@ -9,7 +9,7 @@ A set of node-red nodes to manage the Broadlink <http://www.ibroadlink.com/> RM 
 
 This is a fork of the work by VladimirSFilippov <https://github.com/VladimirSFilippov/node-red-contrib-broadlink> with some enhancements and additions I was looking for, including documentation.
 
-Note: Version 2 includes updates for the newer RM4 and other devices and requires a device type setting to be added to your device configs if you are upgrading.
+If you would like to donate to purchasing some testing hardware or want to buy me a coffee or beer, click here: <https://www.paypal.me/mlfunston>
 
 ## Supported Devices
 
@@ -154,7 +154,19 @@ Also thanks to the [python-broadlink](https://github.com/mjg59/python-broadlink)
 
 ## Changelog
 
-### v2.0.0 (latest)
+### v2.0.1 (latest)
+
+Note - Version 2.0.0 introduced a new field in the device configuration which required a manual change to each RM device configuration in Node-RED.
+
+* Enhancement: Add support for RM4Pro device type 6026. Issue #28 & #30.
+* Enhancement: Remove requirement for catalog field to be populated in RM nodes (if sending codes directly instead of using the catalog files from eControl app) issue #34.
+* Enhancement: Remove default value requirement for device type and leave as default 272a if older hardware used. Only newer RM4+ type units need the device type inserted. Issue #31.
+* Enhancement: Change Timeout message to info only. The terminology here was incorrect. Refer issue #33.
+* Enhancement: Improved node status messaging on RM Nodes
+
+Note - RF learn and send may not be working yet on the RM Pro 4 series but should be working in the earlier RM Pro units, although I don't have either to test with.
+
+### v2.0.0
 
 Note - This version introduces a new field in the device configuration which will require a manual change to each device configuration.
 

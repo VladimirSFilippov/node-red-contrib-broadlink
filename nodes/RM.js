@@ -97,31 +97,30 @@ class RM extends Device {
         this.sendPacket(0x6a, packet);
     }
 
-    //if(isPlus) {
-        enterRFSweep() {
-            var packet = Buffer.alloc(16, 0);
-            packet[0] = 0x19;
-            this.sendPacket(0x6a, packet);
-        }
+    enterRFSweep() {
+        var packet = Buffer.alloc(16, 0);
+        packet[0] = 0x19;
+        this.sendPacket(0x6a, packet);
+    }
 
-        checkRFData() {
-            var packet = Buffer.alloc(16, 0);
-            packet[0] = 0x1a;
-            this.sendPacket(0x6a, packet);
-        }
+    checkRFData() {
+        var packet = Buffer.alloc(16, 0);
+        packet[0] = 0x1a;
+        this.sendPacket(0x6a, packet);
+    }
 
-        checkRFData2() {
-            var packet = Buffer.alloc(16, 0);
-            packet[0] = 0x1b;
-            this.sendPacket(0x6a, packet);
-        }
+    checkRFData2() {
+        var packet = Buffer.alloc(16, 0);
+        packet[0] = 0x1b;
+        this.sendPacket(0x6a, packet);
+    }
 
-        cancelRFSweep() {
-            var packet = Buffer.alloc(16, 0);
-            packet[0] = 0x1e;
-            this.sendPacket(0x6a, packet);
-        }
-    //}
+    cancelRFSweep() {
+        var packet = Buffer.alloc(16, 0);
+        packet[0] = 0x1e;
+        this.sendPacket(0x6a, packet);
+    }
+
 }
 module.exports = RM;
 
