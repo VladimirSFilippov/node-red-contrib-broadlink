@@ -43,6 +43,21 @@ Note: The newer Broadlink IHC / Intelligent Home Center app is not compatible wi
 
 Secondly, newer firmware / devices may not work with the older e-control app, so you may need to use the database files I have included in the brodlinkDB directory and learn the IR codes directly with the example code.
 
+### New Broadlink App and Cloud mode - Troubleshooting
+
+The latest Broadlink app may confiure the device in cloud mode which means that it will no longer function locally with this library. This is common for RM4 and RM3 Mini Newer device (eg device type 5f36). If you can discover the device but cannot learn or send, then you likely have this issue.
+
+To reverse this, you will need to reset the device.
+
+Suggested process is as follows:
+
+1. Remove any existing configured devices or control in the Broadlink app.
+2. Reset device by long press (~6 seconds) the reset button with a pin or paperclip until the LED rapidly flashes.
+3. Use the BroadLink app to connect to WiFi (keep your phone close to RM). AND STOP!!
+4. Do nothing more, dont't add anything more in the app, quit the app and now use the node.
+
+Thanks to <https://github.com/QuadrifoglioVerde> for the info ![here](https://github.com/home-assistant/core/issues/30215#issuecomment-581159499).
+
 ## Configuring the Broadlink App
 
 The app itself is not that intuitive, but after you add the RM device you will need to add a user defined device (eg an air conditioner or tv) and buttons. If you use one of the built in devices the remote commands aren't recorded in the files, so make sure to use `user defined`.
