@@ -76,7 +76,51 @@
             _device.on("deviceReady", (devm) => {
                 node.status({fill:"grey",shape:"ring",text:"Broadlink Device Ready"});
                 var _config = { action: config.action, remote: config.remote, button: config.button, fix: config.fix, RFSweep: config.RFSweep, data: undefined };//, repeat: config.repeat _config.repeat = msg.payload.repeat; 
-                if (_config.action == "_msg_") { _config.action = msg.payload.action; _config.remote = msg.payload.remote; _config.button = msg.payload.button; _config.fix = msg.payload.fix; _config.RFSweep = msg.payload.RFSweep; _config.data = (msg.payload.data != undefined && typeof (msg.payload.data) == "string") ? JSON.parse(msg.payload.data) : ((msg.payload.data != undefined && typeof (msg.payload.data) == "object") ? msg.payload.data : undefined); }
+                // Determine msg.payload.data format and process it
+                if (_config.action == "_msg_") { 
+                    _config.action = msg.payload.action; 
+                    _config.remote = msg.payload.remote; 
+                    _config.button = msg.payload.button; 
+                    _config.fix = msg.payload.fix; 
+                    _config.RFSweep = msg.payload.RFSweep; 
+                    //_config.data = (msg.payload.data != undefined && typeof (msg.payload.data) == "string") ? JSON.parse(msg.payload.data) : ((msg.payload.data != undefined && typeof (msg.payload.data) == "object") ? msg.payload.data : undefined); 
+                    if (msg.payload.data != undefined && typeof (msg.payload.data) == "string") {
+                        // JSON data or Base64
+                        try {
+                            _config.data = JSON.parse(msg.payload.data);
+                        } catch (error) {
+                            // Not JSON must be Base64
+                            node.info("Base64 Data Found");
+                            node.status({fill:"blue",shape:"ring",text:"Base64 Data Decoding"});
+                            // Check if Base64 Encoded Correctly
+                            var regexp = new RegExp('^[A-Za-z0-9+\/=]*$');  // check it only contains valid characters
+                            var value = msg.payload.data;
+                            if ( typeof value === "string") {
+                                var load = value.replace(/\s+/g,'');
+                                if (regexp.test(load) && (load.length % 4 === 0) ) {
+                                    _config.data = Buffer.from(value,'base64');
+                                }
+                                else {
+                                    // Not correctly Formatted??
+                                    node.warn("Data not correctly formatted. Must be object, data string or base64");
+                                    node.status({fill:"red",shape:"dot",text:"Data Incorrect"});
+                                }
+                            }
+                        }
+                        
+                    }
+                    else if (msg.payload.data != undefined && typeof (msg.payload.data) == "object") {
+                        // Data Object - Send Directly
+                        node.status({fill:"blue",shape:"ring",text:"Data Object Found"});
+                        _config.data = msg.payload.data
+                    }
+                    else {
+                        // Pull data from the Catalog file
+                        node.status({fill:"blue",shape:"ring",text:"Catalog File Request"});
+                        _config.data = undefined; 
+                    }
+
+                }
 
                 switch (_config.action) {
                     case "learn":
@@ -103,6 +147,7 @@
                         break;
                     case "send":
                         if (_config.data === undefined) { //EG we have not passed a data string to be sent and want to look it up in jsonIRCode
+                            node.warn("Broadlink: No Data String - Looking up in the Catalog");
                             var options = {};
                             options['encoding'] = "utf8";
                             fs.readFile(conf.folder + "/jsonIrCode", options, function (err, data) {
@@ -140,7 +185,8 @@
                             });
                         }
                         else {
-                            var code = new Buffer(_config.data);
+                           
+                           var code = new Buffer(_config.data);
                             //if (_config.repeat != undefined && code[1] == 0) code[1] = _config.repeat;
                             node.status({fill:"green",shape:"ring",text:"Sending Data"});
                             _device.sendData(code);

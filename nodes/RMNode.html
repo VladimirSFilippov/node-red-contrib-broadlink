@@ -179,12 +179,20 @@ msg.payload.button = 202;
     <h3><span >Learning</span></h3>
     <pre>msg.payload.action = 'learn';</pre>
     <h3><span >Sending Commands</span></h3>
-    <p><span >You can send codes directly</span>:</p>
+    <p><span >You can send codes directly with the data formatted as an object or Base64 encoded</span>:</p>
 <pre>msg.payload.action = 'send';
-msg.payload.data = [ 38, 0, 34, 1, 40, 15, 40, 15....];    
+msg.payload.data = [ 38, 0, 34, 1, 40, 15, 40, 15....];    // Insert Object Data here
 </pre>
     <p><span >Or the button Id from the jsonIrCode file</span>:</p>
 <pre>msg.payload.action = 'send';
 msg.payload.button = 202;
 </pre>
+<p><span >or Base64 encoded</span>:</p>
+<pre>msg.payload.action = 'send';
+    msg.payload.data = "JgBMAnM3ECkQK......ApECkQDBANEAANBQAAAAAAAAAAAAAAAA==";    // Insert Base64 Data here
+    </pre>
+        <p><span >Or the button Id from the jsonIrCode file</span>:</p>
+    <pre>msg.payload.action = 'send';
+    msg.payload.button = 202;
+    </pre>
 </script>

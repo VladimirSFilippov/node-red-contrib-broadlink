@@ -102,6 +102,31 @@ Now you should be able to click on the inject node and fire a signal to your dev
 
 Start adding extra nodes to fire out the functions you need or inject messages to the node to drive it.
 
+## Sending data via msg.payload
+
+Data needs to be formatted as a buffer object, or as a Base64 data string (eg as used by Home Assistant or others).
+
+An example of a function node containing the sample data is shown below.
+
+```javascript
+//Insert learned data object here
+var data = [38,0,140,0,77,21,18,22,38,21,17,22,17,22,38,21,18,21,18,22,37,22,17,22,18,21,18,22,17,0,3,99,77,21,18,22,38,21,17,22,18,21,38,21,18,22,17,22,38,21,18,21,18,22,17,22,17,0,3,99,77,21,18,22,37,22,17,22,18,21,38,21,18,22,17,22,37,22,18,21,18,22,17,22,18,0,3,100,76,22,18,21,38,21,18,22,17,22,37,22,18,21,18,22,37,22,17,22,18,21,18,22,17,0,3,101,76,22,18,21,39,20,18,22,17,22,37,22,18,21,18,22,37,22,17,22,18,21,18,22,17,0,13,5,0,0,0,0,0,0,0,0,0,0,0,0];
+// or Base64 encoded format from other source
+//var data = "JgBMAnM3ECkQKRANEAwRDQ8pEAwQDRApDyoQDQ8pEA0QDRAoECkQDRAoEigQDBEMECkRDBAMECkQDRAMEA0QDRAMEA0QDRANDw4PDQ8NEA0PDRANEA0RDA8NEAwRDBAMESgQDRAMEA0QDRAMESgQKRANEAwRDBApDyoQDBApEA4PDBILEQwQDRAoESgRDBApECkQDBANECkQDBANECgRDBANECkQDBEoEQwQKQ8NEA0QKQ8qEAwQDRAMEA0QDQ8NEA0QDBEMEAwRDQ8ODwwRDBAMEA0QDRAMEA0QDBANEQwQDRAMEA4PDRANEAwQDBANEA0QDBEMEAwQDRAMEA4PDBEMEA0PDRANEAwRDQ4OEAwRDBEMEAwQDRANECgQKRApECkQDBEMEAACMnc4ECgQKRANEQwQDQ8pEQwQDQ8qECgQDRApEA0QDBEoECkQDBEoECkQDRAMECkQDRAMECkQDRANEAwQDRANDw0QDQ8NEQwQDBEMEA0PDRENDw0QDBANDw0QDRANECgRDBAMEA0QDRAMECkRKBANEAwRDBApECkQDBEoEQwQDRAMEA0QDBApECkQDRApECgQDRANECgRDBANECgRDBANECgRDBApEAwQKRANEAwRKBApEQwQDBEMEA0QDBEMEA0QDQ8NDw0RDBAMEQwQDRAMEA0QDBEMEA0QDBANEAwQDRANEAwQDRANEAwQDRAMEA0QDRAMEA0QDBANEA0RCxILEQwQDBEMEA0QDBEMEA0QDQ8NEQwQDBANECkPKhApECkQDBANEAANBQAAAAAAAAAAAAAAAA=="
+
+msg.payload={
+    //"mac":"MAC address of your broadlink rm",  // Optional if configured in the RM node
+    //"host":"IP address of your broadlink rm",  // Optional if configured in the RM node
+    "action":"send",
+    "data":data,
+    "repeat":2
+};
+
+return msg;
+```
+
+This should then be connected to the RM node to send the data.
+
 ## Examples
 
 There are example flows to provide some additional functions / templates to use. You can get the exmple flows from the Node Red hamburger menu (top right corner), choose Import -> Examples -> broadlink-control and pick your example.
@@ -169,7 +194,15 @@ Also thanks to the [python-broadlink](https://github.com/mjg59/python-broadlink)
 
 ## Changelog
 
-### v2.0.1 (latest)
+### v2.1.0 (latest)
+
+Note - Version 2.0.0 introduced a new field in the device configuration which required a manual change to each RM device configuration in Node-RED.
+
+* Enhancement: Add Base64 Decoding to the RM Node. Data can now be sent in Base64 format. Issue #32
+
+Note - RF learn and send may not be working yet on the RM Pro 4 series but should be working in the earlier RM Pro units, although I don't have either to test with.
+
+### v2.0.1
 
 Note - Version 2.0.0 introduced a new field in the device configuration which required a manual change to each RM device configuration in Node-RED.
 
