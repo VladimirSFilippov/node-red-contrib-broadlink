@@ -90,7 +90,7 @@
                             _config.data = JSON.parse(msg.payload.data);
                         } catch (error) {
                             // Not JSON must be Base64
-                            node.info("Base64 Data Found");
+                            node.log("Base64 Data Found");
                             node.status({fill:"blue",shape:"ring",text:"Base64 Data Decoding"});
                             // Check if Base64 Encoded Correctly
                             var regexp = new RegExp('^[A-Za-z0-9+\/=]*$');  // check it only contains valid characters
@@ -147,7 +147,7 @@
                         break;
                     case "send":
                         if (_config.data === undefined) { //EG we have not passed a data string to be sent and want to look it up in jsonIRCode
-                            node.warn("Broadlink: No Data String - Looking up in the Catalog");
+                            node.log("Broadlink: No Data String - Looking up in the Catalog");
                             var options = {};
                             options['encoding'] = "utf8";
                             fs.readFile(conf.folder + "/jsonIrCode", options, function (err, data) {
