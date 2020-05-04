@@ -7,6 +7,8 @@ class Device {
         this.host = host;
         this.mac = mac;
         this.devType = devType;
+        // this.devName = devName;
+        // this.devCloud = devCloud;
         this.emitter = new EventEmitter();
 
         this.on = this.emitter.on;

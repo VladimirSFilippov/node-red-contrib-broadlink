@@ -83,6 +83,8 @@ class Broadlink {
         cs.on("message", (msg, rinfo) => {
             var host = rinfo;
             var mac = msg.slice(0x3a, 0x40).reverse().toString('hex');
+            var devName = msg.slice(0x40, -1).toString('utf8');
+            var devCloud = msg.slice(-1).toString('hex') % 2 == 1;
             var fullmsg = msg;
 
             var devtype = msg[0x34] | msg[0x35] << 8;
@@ -91,7 +93,7 @@ class Broadlink {
             }
 
             if (!this.devices[mac]) {
-                this.devices[mac] = { "type": devtype, "address": host.address, "fullmsg": fullmsg };
+                this.devices[mac] = { "type": devtype, "address": host.address, "name": devName, "cloud": devCloud, "fullmsg": fullmsg };
             }
         });
 
