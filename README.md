@@ -197,7 +197,7 @@ Also thanks to the [python-broadlink](https://github.com/mjg59/python-broadlink)
 ### v2.1.1 (latest)
 
 * Enhancement: Added new RM4 device types 61a2 and 62bc. Issues #44 & #45.
-* Enhancement: Added cloud based device identification in the Discover node with additional dignostic data. Issue #42.
+* Enhancement: Added cloud based device identification in the Discover node with additional diagnostic data. Issue #42.
 
 Note - RF learn and send may not be working yet on the RM Pro 4 series but should be working in the earlier RM Pro units, although I don't have either to test with.
 
