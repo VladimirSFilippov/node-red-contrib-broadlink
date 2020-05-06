@@ -31,7 +31,9 @@ Refer to this thread for similar process: <https://github.com/ericmagnuson/rmcon
 
 Add the Broadlink node to node-red through the manage palette tab or command line.
 
-You can either learn commands directly from the RM unit using the node, or from the Broadlink e-control app and export them. You will need the SharedData folder exported from the app as a starting point either way.
+You can either learn commands directly from the RM unit using the node, or from the Broadlink e-control app and export them. You will need the SharedData folder (or broadlinkDB folder from the node) exported from the app as a starting point either way.
+
+Please use the sample broadlinkDB folder as the catalog if you cannot / do not want to extract the file from the e-control app. The RM Node expects files to be formatted a certain way.
 
 ## Broadlink e-control App Method
 
