@@ -146,7 +146,7 @@
                             options['encoding'] = "utf8";
                             fs.readFile(conf.folder + "/jsonIrCode", options, function (err, data) {
                                 if (err) {
-                                    node.err(err);
+                                    node.error(err);
                                 } else {
                                 }
                                 // Need to validate if _config.button contains valid data
@@ -154,7 +154,7 @@
                                     var code = JSON.parse(data).filter(function (obj) { if (obj.buttonId == _config.button) { return true; } })[0].code;
                                 }
                                 catch(err) {
-                                    node.err(err);
+                                    node.error(err);
                                     node.status({fill:"red",shape:"ring",text:"Message Data Error - See Console Log"});
                                 }
                                 if (_config.repeat != undefined) code[1] = _config.repeat;

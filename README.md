@@ -201,6 +201,8 @@ Also thanks to the [python-broadlink](https://github.com/mjg59/python-broadlink)
 
 * Enhancement: Updated confirmation for SC1 devices working with SP2 node.
 * Enhancement: Added cloud based device identification in the Discover node with additional diagnostic data. Issue #42.
+* Enhancement: Added RM4 Mini Device Type 0x648d. Issue #53.
+* BUGFIX: Fixes for issues related to: issue #57.
 
 Note - RF learn and send may not be working yet on the RM Pro 4 series but should be working in the earlier RM Pro units, although I don't have either to test with.
 
