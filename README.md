@@ -17,12 +17,13 @@ If you would like to donate to purchasing some testing hardware or want to buy m
 * RM-Pro - <http://www.ibroadlink.com/rmPro+/>
 * RM 4 and newer mini devices
 * MP1 - 4 Outlet Power Strip
+* SP2 - WiFi Smart Socket
+* SC1 - WiFi Smart Socket - Use the SP2 node
 
 Note: There are other nodes included per below list, however, I have not tested them as I don't have those devices. So let me know if you've had success using them.
 
 * A1 - Environment Sensor - <http://www.ibroadlink.com/a1/>
 * S1C - SmartONE Alarm Kit - <http://www.ibroadlink.com/s1c/>
-* SP2 - WiFi Smart Socket
 
 The TC2 device is not directly supported as it communicates via RF to the RM-Pro. However, if you have an RM Pro unit, you can pull the RF codes from the phone app after you have configured it and use those to control the switch. Note that you may need to send them multiple times to ensure it meets the requirements of being divisible by 16.
 Refer to this thread for similar process: <https://github.com/ericmagnuson/rmcontrol/issues/4#issuecomment-269480450>
@@ -196,7 +197,14 @@ Also thanks to the [python-broadlink](https://github.com/mjg59/python-broadlink)
 
 ## Changelog
 
-### v2.1.1 (latest)
+### v2.1.2 (latest)
+
+* Enhancement: Updated confirmation for SC1 devices working with SP2 node.
+* Enhancement: Added cloud based device identification in the Discover node with additional diagnostic data. Issue #42.
+
+Note - RF learn and send may not be working yet on the RM Pro 4 series but should be working in the earlier RM Pro units, although I don't have either to test with.
+
+### v2.1.1
 
 * Enhancement: Added new RM4 device types 61a2 and 62bc. Issues #44 & #45.
 * Enhancement: Added cloud based device identification in the Discover node with additional diagnostic data. Issue #42.

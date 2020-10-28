@@ -51,6 +51,7 @@
                     else if (devtype == 0x61a2) return 'RM4 Pro';
                     else if (devtype == 0x62bc) return 'RM4c';
                     else if (devtype == 0x62be) return 'RM4c';
+                    else if (devtype == 0x7547) return 'SC1 - Use the SP2 Node';
                     else return 'Broadlink: Unconfigured Device Type: Log an issue with the device details and typeid returned as this may be a new device type.';
                 }
                 
